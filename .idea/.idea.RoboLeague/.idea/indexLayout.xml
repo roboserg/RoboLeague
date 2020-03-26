@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelUserStore">
+    <attachedFolders />
+    <explicitIncludes>
+      <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
+      <Path>Library/PackageCache/com.unity.ide.rider@1.1.4</Path>
+      <Path>Library/PackageCache/com.unity.ide.vscode@1.1.4</Path>
+      <Path>Library/PackageCache/com.unity.inputsystem@1.0.0-preview.6</Path>
+      <Path>Library/PackageCache/com.unity.postprocessing@2.3.0</Path>
+      <Path>Library/PackageCache/com.unity.test-framework@1.1.11</Path>
+      <Path>Library/PackageCache/com.unity.textmeshpro@2.0.1</Path>
+      <Path>Packages</Path>
+      <Path>ProjectSettings</Path>
+    </explicitIncludes>
+    <explicitExcludes>
+      <Path>.git</Path>
+      <Path>.idea</Path>
+      <Path>.vs</Path>
+      <Path>Builds</Path>
+      <Path>FbxExporters</Path>
+      <Path>Library</Path>
+      <Path>Logs</Path>
+      <Path>Temp</Path>
+      <Path>obj</Path>
+    </explicitExcludes>
+  </component>
+</project>

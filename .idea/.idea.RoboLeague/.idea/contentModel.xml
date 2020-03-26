@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Roboserg\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Roboserg\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_RoboLeague.860720467.00" t="ExcludeRecursive" />
+    <e p="I:\Unity ML Agents\RoboLeague" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="AdditionalPackages" t="Include">
+          <e p="BuggyHoverPhysics" t="Include">
+            <e p="CarbonConcept" t="Include">
+              <e p="Buggy" t="Include">
+                <e p="Rotation_forward.cs" t="Include" />
+                <e p="Rotation_TIRES.cs" t="Include" />
+              </e>
+              <e p="JMO Assets" t="Include">
+                <e p="MatCap Shaders" t="Include">
+                  <e p="Shaders" t="Include">
+                    <e p="MatCap_TextureMult.shader" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+          </e>
+          <e p="ECCAssets" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Console.cs" t="Include" />
+              <e p="ECCCar.cs" t="Include" />
+              <e p="VehicleCameraControl.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Joystick Pack" t="Include">
+            <e p="Examples" t="Include">
+              <e p="JoystickPlayerExample.cs" t="Include" />
+              <e p="JoystickSetterExample.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Base" t="Include">
+                <e p="Joystick.cs" t="Include" />
+              </e>
+              <e p="Editor" t="Include">
+                <e p="DynamicJoystickEditor.cs" t="Include" />
+                <e p="FloatingJoystickEditor.cs" t="Include" />
+                <e p="JoystickEditor.cs" t="Include" />
+                <e p="VariableJoystickEditor.cs" t="Include" />
+              </e>
+              <e p="Joysticks" t="Include">
+                <e p="DynamicJoystick.cs" t="Include" />
+                <e p="FixedJoystick.cs" t="Include" />
+                <e p="FloatingJoystick.cs" t="Include" />
+                <e p="VariableJoystick.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="RobotSphere" t="Include">
+            <e p="Assets" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="RobotFreeAnimEditor.cs" t="Include" />
+                </e>
+                <e p="RobotFreeAnim.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="UnitySkidmarks" t="Include">
+            <e p="Skidmarks.cs" t="Include" />
+            <e p="Skidmarks.shader" t="Include" />
+            <e p="WheelSkid.cs" t="Include" />
+          </e>
+        </e>
+        <e p="InputMaster.cs" t="Include" />
+        <e p="Materials" t="Include">
+          <e p="FadeSurfaceShader.shader" t="Include" />
+        </e>
+        <e p="PlayerTest.cs" t="Include" />
+        <e p="Plugins" t="Include">
+          <e p="Sirenix" t="Include">
+            <e p="Odin Inspector" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="AssemblyImportSettingsAutomation.cs" t="Include" />
+                  <e p="BuildAOTAutomation.cs" t="Include" />
+                  <e p="EnsureOdinInspectorDefine.cs" t="Include" />
+                  <e p="FixBrokenUnityObjectWrapperDrawer.cs" t="Include" />
+                  <e p="SyncListDrawer.cs" t="Include" />
+                  <e p="SyncVarAttributeDrawer.cs" t="Include" />
+                  <e p="Vector2IntMinMaxAttributeDrawer.cs" t="Include" />
+                  <e p="VectorIntDrawers.cs" t="Include" />
+                  <e p="VectorIntPropertyResolvers.cs" t="Include" />
+                </e>
+                <e p="SerializedNetworkBehaviour.cs" t="Include" />
+                <e p="VectorIntFormatters.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Ball" t="Include">
+            <e p="Ball.cs" t="Include" />
+            <e p="BallPhysics.cs" t="Include" />
+          </e>
+          <e p="Camera" t="Include">
+            <e p="BallCamOff.cs" t="Include" />
+            <e p="CameraController.cs" t="Include" />
+            <e p="CameraFov.cs" t="Include" />
+            <e p="RayCameraController.cs" t="Include" />
+            <e p="SimpleCameraController.cs" t="Include" />
+          </e>
+          <e p="CarControllers" t="Include">
+            <e p="CubeController" t="Include">
+              <e p="CubeAirControl.cs" t="Include" />
+              <e p="CubeBoxTrigger.cs" t="Include" />
+              <e p="CubeController.cs" t="Include" />
+              <e p="CubeJumping.cs" t="Include" />
+              <e p="CubeParticleSystem.cs" t="Include" />
+              <e p="CubeSphereCollider.cs" t="Include" />
+              <e p="CubeSphereTrigger.cs" t="Include" />
+              <e p="CubeWheel.cs" t="Include" />
+              <e p="CubeWheelForces.cs" t="Include" />
+              <e p="test.cs" t="Include" />
+            </e>
+            <e p="MyRayCast" t="Include">
+              <e p="RayController.cs" t="Include" />
+              <e p="RayWheel.cs" t="Include" />
+            </e>
+            <e p="Other" t="Include">
+              <e p="CarController.cs" t="Include" />
+              <e p="CarSelfRighting.cs" t="Include" />
+              <e p="CarUserControl.cs" t="Include" />
+              <e p="HoverCarControl.cs" t="Include" />
+              <e p="RayCastCarController.cs" t="Include" />
+              <e p="SphereController.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="CheckerBoardGlobal.shader" t="Include" />
+          <e p="CheckerBoardLocal.shader" t="Include" />
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="RoboLeague.sln" t="IncludeFlat" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.csproj" t="IncludeRecursive" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj" t="IncludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
