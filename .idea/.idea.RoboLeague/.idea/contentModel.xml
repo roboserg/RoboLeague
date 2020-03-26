@@ -70,9 +70,6 @@
           </e>
         </e>
         <e p="InputMaster.cs" t="Include" />
-        <e p="Materials" t="Include">
-          <e p="FadeSurfaceShader.shader" t="Include" />
-        </e>
         <e p="PlayerTest.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Sirenix" t="Include">
@@ -119,6 +116,7 @@
               <e p="CubeWheel.cs" t="Include" />
               <e p="CubeWheelForces.cs" t="Include" />
               <e p="test.cs" t="Include" />
+              <e p="todo.txt" t="Include" />
             </e>
             <e p="MyRayCast" t="Include">
               <e p="RayController.cs" t="Include" />
@@ -137,6 +135,11 @@
         <e p="Shaders" t="Include">
           <e p="CheckerBoardGlobal.shader" t="Include" />
           <e p="CheckerBoardLocal.shader" t="Include" />
+          <e p="FadeSurfaceShader.shader" t="Include" />
+          <e p="FurHelpers.cginc" t="Include" />
+          <e p="FurHelpers_mask.cginc" t="Include" />
+          <e p="FurShader_20.shader" t="Include" />
+          <e p="FurShader_20_mask.shader" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

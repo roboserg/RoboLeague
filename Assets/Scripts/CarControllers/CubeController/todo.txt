@@ -1,0 +1,24 @@
+Features:
+    - Ball trail
+    - Sounds
+    - Car hit sparks
+    - Ackermann steering with bicycle model
+    - lateral friction model as in RL (ratio between Vx/Vy)
+    - Sticky forces
+    - Dodges and second jump
+    - Better drift (maybe apply torque or less drag on rear wheels)
+    - Ball car interaction (power hit depended on the distance from CoM etc)
+    - Input manager and profiles for PS4 controller (maybe controller auto detect)
+    - Braking
+    - Auto SHIFT click on the body in the scene view
+    
+Problems:
+    - Lateral friction force on walls 
+    - lateral speed goes behind the wheels
+    - Camera fixes (maybe use Cinemamachine, camera as in Kart game)
+    - Aerial CoM
+
+Low priority:
+    - Goal explosion and net visual effect
+ 
+ 

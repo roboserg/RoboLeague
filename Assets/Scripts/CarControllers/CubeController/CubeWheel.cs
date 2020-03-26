@@ -41,7 +41,7 @@ public class CubeWheel : MonoBehaviour
         transform.localRotation = Quaternion.Euler(Vector3.up * steerAngle);
         if (wheelMesh)
         {
-            wheelMesh.transform.position = transform.position;
+            //wheelMesh.transform.position = transform.position;
             wheelMesh.transform.localRotation = transform.localRotation;
             angle += (Time.deltaTime * transform.InverseTransformDirection(wheelVelocity).z) / (2 * Mathf.PI * wheelRadius) * 360;
             //transform.Rotate(new Vector3(0, 1, 0), wheel.steerAngle - transform.localEulerAngles.y);
@@ -73,18 +73,16 @@ public class CubeWheel : MonoBehaviour
 
     private void OnDrawGizmos()
     {   
-        // wheelContactPoint
-        Gizmos.DrawSphere(wheelContactPoint, 0.03f);
-        
         // Draw fake wheel
         Handles.color = Color.green;
+        Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, wheelRadius);
+        
+        // wheelContactPoint
+        Gizmos.DrawSphere(wheelContactPoint, 0.03f);
 
         if (_rb == null) return;
         if (_controller.carState != CubeController.CarStates.AllWheelsSurface &&
-            _controller.carState != CubeController.CarStates.AllWheelsGround) return;
-        
-        Handles.color = Color.red;
-        Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, wheelRadius);
+            _controller.carState != CubeController.CarStates.AllWheelsGround) return;      
         
         // Draw Fx and Fy wheel velocities
         DrawRay(wheelContactPoint, 0.1f * wheelVelocity, Color.black);

@@ -17,9 +17,9 @@ public class CubeSphereCollider : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        float rayLen = (transform.localScale.x / 2) + 0.02f;
+        float rayLen = (transform.localScale.x / 2) + 0.05f;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.cyan;
 
         isTouchingSurface = false;
         if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, rayLen))

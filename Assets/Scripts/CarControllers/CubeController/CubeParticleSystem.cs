@@ -1,45 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeParticleSystem : MonoBehaviour
 {
-    public ParticleSystem WindPS, BoostPS;
-    public GameObject FirePS;
+    public ParticleSystem windPs, boostPs;
+    public GameObject firePs;
 
-    const int supersonicThreshold = 2200 / 100;
-    CubeController controller;
-    bool isBoostAnimationPlaying = false;
+    const int SupersonicThreshold = 2200 / 100;
+    CubeController _controller;
+    private TrailRenderer[] _trails;
+    bool _isBoostAnimationPlaying = false;
 
     void Start()
     {
-        controller = GetComponentInParent<CubeController>();
-        FirePS.SetActive(false);
+        _controller = GetComponentInParent<CubeController>();
+        _trails = GetComponentsInChildren<TrailRenderer>();
+        _trails[0].time = _trails[1].time = 0;
+        firePs.SetActive(false);
+
     }
 
     void Update()
     {
         if (Input.GetButton("RB") || Input.GetMouseButton(0))
         {
-            if (isBoostAnimationPlaying == false)
+            if (_isBoostAnimationPlaying == false)
             {
-                BoostPS.Play();
-                FirePS.SetActive(true);
-                isBoostAnimationPlaying = true;
+                boostPs.Play();
+                firePs.SetActive(true);
+                _isBoostAnimationPlaying = true;
             }
 
         }
         else if (!(Input.GetButton("RB") || Input.GetMouseButton(0)))
         {
-            BoostPS.Stop();
-            FirePS.SetActive(false);
-            isBoostAnimationPlaying = false;
+            boostPs.Stop();
+            firePs.SetActive(false);
+            _isBoostAnimationPlaying = false;
         }
+    }
 
-        //  Wind effect
-        if (controller.forwardSpeed >= supersonicThreshold)
-            WindPS.Play();
+    const float TrailLength = 0.075f;
+
+    private void FixedUpdate()
+    {
+        //  Wind and trail effect
+        if (_controller.forwardSpeed >= SupersonicThreshold)
+        {
+            windPs.Play();
+            
+            if (_controller.isAllWheelsSurface)
+                _trails[0].time = _trails[1].time = Mathf.Lerp(_trails[1].time, TrailLength, Time.fixedDeltaTime * 5);
+            else 
+                _trails[0].time = _trails[1].time = 0;
+        }
+        
         else
-            WindPS.Stop();
+        {
+            windPs.Stop();
+            
+            _trails[0].time = _trails[1].time = Mathf.Lerp(_trails[1].time, 0.029f, Time.fixedDeltaTime * 6);
+            if (_trails[0].time <= 0.03f)
+                _trails[0].time = _trails[1].time = 0;
+        }
     }
 }

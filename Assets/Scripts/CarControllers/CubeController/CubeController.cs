@@ -45,13 +45,12 @@ public class CubeController : MonoBehaviour
         Style.normal.textColor = Color.red;
         Style.fontSize = 25;
         Style.fontStyle = FontStyle.Bold;
-        
-        //_rb.velocity = new Vector3(0,0, 14);
     }
 
     private void Update()
     {
         SetCarState();
+        //TODO:  limit _rb.velocity.magnitude to < maxSpeedBoost
     }
 
     void FixedUpdate()
