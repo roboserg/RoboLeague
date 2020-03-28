@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class CubeWheelForces : MonoBehaviour
+public class CubeGroundControl : MonoBehaviour
 {
     [Header("Steering")]
     public float turnRadiusCoefficient = 40;
@@ -15,7 +16,7 @@ public class CubeWheelForces : MonoBehaviour
     public float WheelSideFriction = 8;
     public float WheelSideFrictionDrift = 0.5f;
     
-    public CubeWheel[] wheels;
+    CubeWheel[] _wheelArray;
     
     Rigidbody _rb;
     CubeController _controller;
@@ -29,11 +30,12 @@ public class CubeWheelForces : MonoBehaviour
     {
         _rb = GetComponentInParent<Rigidbody>();
         _controller = GetComponent<CubeController>();
+        _wheelArray = GetComponentsInChildren<CubeWheel>();
     }
 
     private void Update()
     {
-        // Process Input
+        // Process Input 
         _throttleInput = 0;
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("RT") > 0)
             _throttleInput = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("RT"));
@@ -52,18 +54,17 @@ public class CubeWheelForces : MonoBehaviour
         }
     }
 
-    private bool _isCanDrive = false;
+    
     private void FixedUpdate()
     {
-        _isCanDrive = false || (_controller.carState == CubeController.CarStates.AllWheelsSurface ||
-                               _controller.carState == CubeController.CarStates.AllWheelsGround);
+        //if(_controller.isCanDrive)
 
         float Fx = _throttleInput * GetThrottleSpeed();
         currentSteerAngle = (1 / GetTurnRadius(_controller.forwardSpeed)) * turnRadiusCoefficient * Input.GetAxis("Horizontal");
         
-        foreach (var w in wheels)
+        foreach (var w in _wheelArray)
         {
-            if (_isCanDrive) w.forwardForce = Fx / 4;
+            if (_controller.isCanDrive) w.forwardForce = Fx / 4;
             
             if (w.wheelFL || w.wheelFR) 
                 w.steerAngle = currentSteerAngle;
@@ -128,5 +129,15 @@ public class CubeWheelForces : MonoBehaviour
         _rb.AddTorque(transform.up * (Input.GetAxis("Horizontal") * naiveRotationForce), ForceMode.Acceleration);
         _rb.AddTorque(transform.up * (naiveRotationDampeningForce * (1 - Mathf.Abs(Input.GetAxis("Horizontal"))) *
                                       transform.InverseTransformDirection(_rb.angularVelocity).y), ForceMode.Acceleration);
+    }
+}
+
+internal static class MyClass
+{
+    [RuntimeInitializeOnLoadMethod]
+    static void OnRuntimeMethodLoad()
+    {
+        //Selection.activeGameObject = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<BoxCollider>().gameObject;
+        //SceneView.FrameLastActiveSceneView();
     }
 }

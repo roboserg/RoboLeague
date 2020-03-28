@@ -10,7 +10,7 @@ Features:
     - Ball car interaction (power hit depended on the distance from CoM etc)
     - Input manager and profiles for PS4 controller (maybe controller auto detect)
     - Braking
-    - Auto SHIFT click on the body in the scene view
+    
     
 Problems:
     - Lateral friction force on walls 
@@ -22,3 +22,6 @@ Low priority:
     - Goal explosion and net visual effect
  
  
+Done:
+    - Auto SHIFT click on the body in the scene view
+    

@@ -2,16 +2,20 @@
 
 public class CubeJumping : MonoBehaviour
 {
-    public bool isDebug = false;
+    [Header("Forces")]
+    [Range(1,4)]
+    public float jumpForceMultiplier = 1;
+    public int upForce = 3;
+    public int upTorque = 50;
 
-    public float jumpTimer = 0;
+    float jumpTimer = 0;
     bool _isMouseButton1 = false;
     bool _isMouseButtonDown1 = false;
     bool _isMouseButtonUp1 = false;
 
-    public bool isCanFirstJump = false;
-    public bool isJumping = false;
-    public bool isCanKeepJumping = false;
+    bool isCanFirstJump = false;
+    bool isJumping = false;
+    bool isCanKeepJumping = false;
 
     Rigidbody _rb;
     CubeController _controller;
@@ -56,11 +60,10 @@ public class CubeJumping : MonoBehaviour
         // Do initial jump impulse only once
         if (_isMouseButtonDown1 && isCanFirstJump)
         {
-            if (isDebug) Debug.Log("Initial jump impulse");
             isCanKeepJumping = true;
             isCanFirstJump = false;
             isJumping = true;
-            _rb.AddForce(transform.up * 291.667f / 100 * _controller.jumpForceMultiplier, ForceMode.VelocityChange);
+            _rb.AddForce(transform.up * 291.667f / 100 * jumpForceMultiplier, ForceMode.VelocityChange);
 
             jumpTimer += Time.fixedDeltaTime;
         }
@@ -72,9 +75,8 @@ public class CubeJumping : MonoBehaviour
         // Keep jumping if jump button pressed
         if (_isMouseButton1 && isJumping && isCanKeepJumping && jumpTimer <= 0.2f )
         {
-            _rb.AddForce(transform.up * 1458f / 100 * _controller.jumpForceMultiplier, ForceMode.Acceleration);
+            _rb.AddForce(transform.up * 1458f / 100 * jumpForceMultiplier, ForceMode.Acceleration);
             jumpTimer += Time.fixedDeltaTime;
-            //if (isDebug) Debug.Log("jump acceleration");
         }
 
         _isMouseButton1 = false;
@@ -82,16 +84,15 @@ public class CubeJumping : MonoBehaviour
         _isMouseButtonUp1 = false;
     }
     
-    //Auto jump when on the roof
+    //Auto jump and rotate when the car is on the roof
     void JumpBackToTheFeet()
     {
-        if (_controller.carState == CubeController.CarStates.BodyGroundDead)
+        if (_controller.carState != CubeController.CarStates.BodyGroundDead) return;
+        
+        if (_isMouseButtonDown1 || Input.GetButtonDown("A"))
         {
-            if (_isMouseButtonDown1 || Input.GetButtonDown("A"))
-            {
-                _rb.AddForce(Vector3.up * _controller.upForce, ForceMode.VelocityChange);
-                _rb.AddTorque(transform.forward * _controller.upTorque, ForceMode.VelocityChange);
-            }
+            _rb.AddForce(Vector3.up * upForce, ForceMode.VelocityChange);
+            _rb.AddTorque(transform.forward * upTorque, ForceMode.VelocityChange);
         }
     }
 }

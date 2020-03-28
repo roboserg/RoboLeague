@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
-    [Header("Forces")]
-    public float jumpForceMultiplier = 1;
-    public int upForce = 3;
-    public int upTorque = 50;
-
     [Header("Car State")]
     public bool isAllWheelsSurface = false;
+    public bool isCanDrive;
     public float forwardSpeed;
     public int numWheelsSurface;
     public bool isBodySurface;
@@ -33,6 +30,8 @@ public class CubeController : MonoBehaviour
     Rigidbody _rb;
     static readonly GUIStyle Style = new GUIStyle();
     CubeSphereCollider[] _sphereColliders;
+    public GameObject sceneViewFocusObject;
+    
 
     void Start()
     {
@@ -45,6 +44,10 @@ public class CubeController : MonoBehaviour
         Style.normal.textColor = Color.red;
         Style.fontSize = 25;
         Style.fontStyle = FontStyle.Bold;
+        
+        // Lock scene view camera to the car
+        Selection.activeGameObject = sceneViewFocusObject;
+        SceneView.lastActiveSceneView.FrameSelected(true);
     }
 
     private void Update()
@@ -66,7 +69,10 @@ public class CubeController : MonoBehaviour
         if (Input.GetButton("RB") || Input.GetMouseButton(0))
         {
             if (forwardSpeed < MaxSpeedBoost)
+            {
                 _rb.AddForce(transform.forward * 991 / 100, ForceMode.Acceleration);
+                //TODO: Should apply throttle as well when boosting
+            }
         }
     }
     
@@ -107,6 +113,8 @@ public class CubeController : MonoBehaviour
             carState = CarStates.Air;
             //rb.centerOfMass = Vector3.zero;
         }
+        
+        isCanDrive = false || (carState == CubeController.CarStates.AllWheelsSurface || carState == CubeController.CarStates.AllWheelsGround);
     }
     
     private void SetDrag()

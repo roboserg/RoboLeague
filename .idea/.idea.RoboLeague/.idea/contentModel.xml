@@ -109,12 +109,13 @@
               <e p="CubeAirControl.cs" t="Include" />
               <e p="CubeBoxTrigger.cs" t="Include" />
               <e p="CubeController.cs" t="Include" />
+              <e p="CubeDebugController.cs" t="Include" />
+              <e p="CubeGroundControl.cs" t="Include" />
               <e p="CubeJumping.cs" t="Include" />
               <e p="CubeParticleSystem.cs" t="Include" />
               <e p="CubeSphereCollider.cs" t="Include" />
               <e p="CubeSphereTrigger.cs" t="Include" />
               <e p="CubeWheel.cs" t="Include" />
-              <e p="CubeWheelForces.cs" t="Include" />
               <e p="test.cs" t="Include" />
               <e p="todo.txt" t="Include" />
             </e>
