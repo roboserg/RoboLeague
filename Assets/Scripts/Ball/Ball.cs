@@ -1,44 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
-    public float RandomSpeed = 50;
-    public float InitialForce = 400;
-    public float HitMultiplier = 50;
-
-    Rigidbody rb;
+    public float randomSpeed = 40;
+    public float initialForce = 400;
+    public float hitMultiplier = 50;
+    
+    Rigidbody _rb;
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = new Vector3(0, 0, 0);
+        _rb = GetComponent<Rigidbody>();
+        _rb.velocity = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.T))
         {
-            float speed = Random.Range(RandomSpeed - 10, RandomSpeed + 10);
+            float speed = Random.Range(randomSpeed - 10, randomSpeed + 10);
             Vector2 randomCircle = Random.insideUnitCircle.normalized;
             Vector3 direction = new Vector3(randomCircle.x, Random.Range(-0.5f, 0.5f), randomCircle.y).normalized;
-            rb.velocity = direction * speed;
+            _rb.velocity = direction * speed;
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             Vector3 desired = new Vector3(0, 12.23f, 0f);
             transform.position = desired;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero; 
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero; 
         }
 
         if (Input.GetButtonDown("Select"))
         {
             transform.position = new Vector3(7.76f, 2.98f, 0f);
-            rb.velocity = new Vector3(30, 10,0);
-            rb.angularVelocity = Vector3.zero;
+            _rb.velocity = new Vector3(30, 10,0);
+            _rb.angularVelocity = Vector3.zero;
         }
     }
 
@@ -48,10 +51,10 @@ public class Ball : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             {
-                float force = InitialForce + col.rigidbody.velocity.magnitude * HitMultiplier;
+                float force = initialForce + col.rigidbody.velocity.magnitude * hitMultiplier;
                 //Vector3 dir = transform.position - col.contacts[0].point;
                 Vector3 dir = transform.position - col.transform.position;
-                rb.AddForce(dir.normalized * force);
+                _rb.AddForce(dir.normalized * force);
             }
         }
 
@@ -61,5 +64,11 @@ public class Ball : MonoBehaviour
         //    //rb.AddForce(Vector3.up * -downForce);
         //        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y - SlowVelocityGround, rb.velocity.z);
         //    }
+    }
+    
+    void OnGUI()
+    {
+        // Make a text field that modifies stringToEdit.
+        GUILayout.TextField((3.6f *_rb.velocity.magnitude).ToString() + " km/h", 25);
     }
 }

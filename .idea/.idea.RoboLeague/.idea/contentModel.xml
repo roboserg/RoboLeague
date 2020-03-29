@@ -69,8 +69,7 @@
             <e p="WheelSkid.cs" t="Include" />
           </e>
         </e>
-        <e p="InputMaster.cs" t="Include" />
-        <e p="PlayerTest.cs" t="Include" />
+        <e p="notes.txt" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Sirenix" t="Include">
             <e p="Odin Inspector" t="Include">
@@ -96,6 +95,7 @@
           <e p="Ball" t="Include">
             <e p="Ball.cs" t="Include" />
             <e p="BallPhysics.cs" t="Include" />
+            <e p="BallTrail.cs" t="Include" />
           </e>
           <e p="Camera" t="Include">
             <e p="BallCamOff.cs" t="Include" />
@@ -116,9 +116,7 @@
               <e p="CubeSphereCollider.cs" t="Include" />
               <e p="CubeSphereTrigger.cs" t="Include" />
               <e p="CubeWheel.cs" t="Include" />
-              <e p="notes.txt" t="Include" />
               <e p="test.cs" t="Include" />
-              <e p="todo.txt" t="Include" />
             </e>
             <e p="MyRayCast" t="Include">
               <e p="RayController.cs" t="Include" />
@@ -138,6 +136,10 @@
             <e p="GameManager.cs" t="Include" />
             <e p="InputManager.cs" t="Include" />
           </e>
+          <e p="NewInput" t="Include">
+            <e p="InputMaster.cs" t="Include" />
+            <e p="NewInputSystemTest.cs" t="Include" />
+          </e>
         </e>
         <e p="Shaders" t="Include">
           <e p="CheckerBoardGlobal.shader" t="Include" />
@@ -148,7 +150,7 @@
           <e p="FurShader_20.shader" t="Include" />
           <e p="FurShader_20_mask.shader" t="Include" />
         </e>
-        <e p="SteeringCurve.cs" t="Include" />
+        <e p="todo.txt" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

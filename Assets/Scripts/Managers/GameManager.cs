@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(AudioManager)), RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(InputManager))]
 public class GameManager : MonoBehaviour
 {
-    public static AudioManager AudioManager;
     public static InputManager InputManager;
+    public static AudioManager AudioManager;
     
     void Awake()
     {

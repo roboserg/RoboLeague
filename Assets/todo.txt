@@ -5,7 +5,8 @@ Features:
     - lateral friction model as in RL (ratio between Vx/Vy)
     - Sticky forces
     - Stabilizing moment (if 2 wheels touch ground, calculate the ground normal and apply moment so that the dot/cross product is 0)
-    - Dodges and second jump
+    - Dodges 
+    - Second jump
     - Better drift (maybe apply torque or less drag on rear wheels)
     - Ball car interaction (power hit depended on the distance from CoM etc)
     - Input manager and profiles for PS4 controller (maybe controller auto detect OR use the new input system)

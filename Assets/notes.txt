@@ -43,8 +43,12 @@ internal static class MyClass
     }
 }
 
+// _currentAlpha = _trail.material.color.a;
+  // _currentAlpha = Mathf.SmoothStep(_currentAlpha, 0, Time.fixedDeltaTime * temp);
+  // _trail.material.color = new Color(1,1,1,_currentAlpha);
 
 // Паша25 implementation for Fy
 //var lateralVel = Vector3.Dot(_rb.GetPointVelocity(wheelContactPoint), transform.right);
 //var sideForce = lateralVel / _wheelForces.sideFriction * transform.right;
 //_rb.AddForceAtPosition(-sideForce, transform.position, ForceMode.Acceleration);
+
