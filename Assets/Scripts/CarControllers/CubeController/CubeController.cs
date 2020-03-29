@@ -8,7 +8,7 @@ public class CubeController : MonoBehaviour
     [Header("Car State")]
     public bool isAllWheelsSurface = false;
     public bool isCanDrive;
-    public float forwardSpeed;
+    public float forwardSpeed = 0, forwardSpeedSign = 0, forwardSpeedAbs = 0;
     public int numWheelsSurface;
     public bool isBodySurface;
     public CarStates carState;
@@ -28,6 +28,7 @@ public class CubeController : MonoBehaviour
     const float MaxSpeedBoost = 2300 / 100;
 
     Rigidbody _rb;
+    private CubeGroundControl _groundControl;
     static readonly GUIStyle Style = new GUIStyle();
     CubeSphereCollider[] _sphereColliders;
     public GameObject sceneViewFocusObject;
@@ -40,7 +41,7 @@ public class CubeController : MonoBehaviour
         _rb.maxAngularVelocity = 5.5f;
 
         _sphereColliders = GetComponentsInChildren<CubeSphereCollider>();
-
+        _groundControl = GetComponent<CubeGroundControl>();
         Style.normal.textColor = Color.red;
         Style.fontSize = 25;
         Style.fontStyle = FontStyle.Bold;
@@ -58,20 +59,27 @@ public class CubeController : MonoBehaviour
 
     void FixedUpdate()
     {
-        forwardSpeed = Vector3.Dot(_rb.velocity, transform.forward);
+        UpdateCarVariables();
         Boosting();
         DownForce();
         //SetDrag();
     }
-    
+
+    private void UpdateCarVariables()
+    {
+        forwardSpeed = Vector3.Dot(_rb.velocity, transform.forward);
+        forwardSpeedAbs = Mathf.Abs(forwardSpeed);
+        forwardSpeedSign = Mathf.Sign(forwardSpeed);
+    }
+
     void Boosting()
     {
-        if (Input.GetButton("RB") || Input.GetMouseButton(0))
+        if (GameManager.InputManager.isBoost)
         {
             if (forwardSpeed < MaxSpeedBoost)
             {
                 _rb.AddForce(transform.forward * 991 / 100, ForceMode.Acceleration);
-                //TODO: Should apply throttle as well when boosting
+                //_groundControl.throttleInput = 1;
             }
         }
     }
@@ -139,10 +147,11 @@ public class CubeController : MonoBehaviour
     
     private void OnDrawGizmos()
     {
+        Gizmos.DrawSphere(cogLow.transform.position, 0.03f);
         if (_rb == null) return;
         // Draw CG
-        Gizmos.DrawSphere(_rb.transform.TransformPoint(_rb.centerOfMass), 0.06f);
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(_rb.transform.TransformPoint(_rb.centerOfMass), 0.03f);
     }
     void OnGUI()
     {
@@ -167,6 +176,5 @@ public class CubeController : MonoBehaviour
         var clearMethod = logEntries.GetMethod("Clear", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
         clearMethod.Invoke(null, null);
     }
-    
     #endregion
 }

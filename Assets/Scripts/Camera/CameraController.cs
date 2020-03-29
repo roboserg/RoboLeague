@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         _ball = GameObject.FindGameObjectWithTag("Ball").transform;
-        _car = GameObject.FindGameObjectWithTag("Player").transform;
+        _car = GameObject.FindGameObjectWithTag("CarCameraTarget").transform;
     }
 
     void Update()

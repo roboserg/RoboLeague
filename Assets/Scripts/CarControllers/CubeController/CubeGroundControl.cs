@@ -7,14 +7,15 @@ using UnityEngine;
 public class CubeGroundControl : MonoBehaviour
 {
     [Header("Steering")]
+    public float steerSensivity;
     public float turnRadiusCoefficient = 40;
     public float currentSteerAngle;
     
     [Header("Drift")]
     public float driftTime;
     public float currentWheelSideFriction = 10;
-    public float WheelSideFriction = 8;
-    public float WheelSideFrictionDrift = 0.5f;
+    public float wheelSideFriction = 8;
+    public float wheelSideFrictionDrift = 0.5f;
     
     CubeWheel[] _wheelArray;
     
@@ -23,9 +24,9 @@ public class CubeGroundControl : MonoBehaviour
     
     float naiveRotationForce = 5;
     float naiveRotationDampeningForce = -10;
-    
-    [HideInInspector] public float _throttleInput;
 
+    [HideInInspector] public float throttleInput = 0, steerInput = 0;
+    
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
@@ -35,33 +36,32 @@ public class CubeGroundControl : MonoBehaviour
 
     private void Update()
     {
+        //TODO: Move input processing to a dedicated input manager static class
         // Process Input 
-        _throttleInput = 0;
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("RT") > 0)
-            _throttleInput = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("RT"));
-        else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("LT") < 0)
-            _throttleInput = Mathf.Min(Input.GetAxis("Vertical"), Input.GetAxis("LT"));
+        {
+            throttleInput = 0;
+            if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("RT") > 0)
+                throttleInput = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("RT"));
+            else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("LT") < 0)
+                throttleInput = Mathf.Min(Input.GetAxis("Vertical"), Input.GetAxis("LT"));
 
-        if (Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift))
-        {
-            currentWheelSideFriction = Mathf.Lerp(currentWheelSideFriction, WheelSideFrictionDrift, Time.deltaTime * driftTime);
-            //currentWheelSideFriction = WheelSideFrictionDrift;
-        }
-        else
-        {
-            currentWheelSideFriction = Mathf.Lerp(currentWheelSideFriction, WheelSideFriction, Time.deltaTime * driftTime);
-            //currentWheelSideFriction = WheelSideFriction;
+            // Sliding / drifting, lowers the wheel side friction when drifting
+            if (Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift))
+                currentWheelSideFriction = Mathf.Lerp(currentWheelSideFriction, wheelSideFrictionDrift,
+                    Time.deltaTime * driftTime);
+            else
+                currentWheelSideFriction =
+                    Mathf.Lerp(currentWheelSideFriction, wheelSideFriction, Time.deltaTime * driftTime);
         }
     }
-
     
     private void FixedUpdate()
     {
-        //if(_controller.isCanDrive)
-
-        float Fx = _throttleInput * GetThrottleSpeed();
-        currentSteerAngle = (1 / GetTurnRadius(_controller.forwardSpeed)) * turnRadiusCoefficient * Input.GetAxis("Horizontal");
+        var Fx = CalculateForwardForce();
         
+        currentSteerAngle = CalculateSteerAngle();
+
+        // Apply forces and steer angle to each wheel
         foreach (var w in _wheelArray)
         {
             if (_controller.isCanDrive) w.forwardForce = Fx / 4;
@@ -69,6 +69,22 @@ public class CubeGroundControl : MonoBehaviour
             if (w.wheelFL || w.wheelFR) 
                 w.steerAngle = currentSteerAngle;
         }
+    }
+
+    private float CalculateSteerAngle()
+    {
+        steerInput = Mathf.MoveTowards(steerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime * steerSensivity);
+        return (1 / GetTurnRadius(_controller.forwardSpeed)) * turnRadiusCoefficient * steerInput;
+    }
+
+    private float CalculateForwardForce()
+    {
+        if (GameManager.InputManager.isBoost)
+            throttleInput = 1;
+        
+        float Fx = throttleInput * GetThrottleSpeed();
+        
+        return Fx;
     }
 
     float GetThrottleSpeed()
@@ -87,9 +103,11 @@ public class CubeGroundControl : MonoBehaviour
         return throttle;
     }
     
-    float GetTurnRadius(float forwardSpeed)
+    float GetTurnRadius(float speed)
     {
+        float forwardSpeed = Mathf.Abs(speed);
         float turnRadius = 0;
+        
         var curvature = CubeController.Scale(0, 5, 0.0069f, 0.00398f, forwardSpeed);
 
         if (forwardSpeed >= 500 / 100)
@@ -132,12 +150,3 @@ public class CubeGroundControl : MonoBehaviour
     }
 }
 
-internal static class MyClass
-{
-    [RuntimeInitializeOnLoadMethod]
-    static void OnRuntimeMethodLoad()
-    {
-        //Selection.activeGameObject = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<BoxCollider>().gameObject;
-        //SceneView.FrameLastActiveSceneView();
-    }
-}

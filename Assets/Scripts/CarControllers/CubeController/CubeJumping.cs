@@ -63,7 +63,7 @@ public class CubeJumping : MonoBehaviour
             isCanKeepJumping = true;
             isCanFirstJump = false;
             isJumping = true;
-            _rb.AddForce(transform.up * 291.667f / 100 * jumpForceMultiplier, ForceMode.VelocityChange);
+            _rb.AddForce(transform.up * 292 / 100 * jumpForceMultiplier, ForceMode.VelocityChange);
 
             jumpTimer += Time.fixedDeltaTime;
         }

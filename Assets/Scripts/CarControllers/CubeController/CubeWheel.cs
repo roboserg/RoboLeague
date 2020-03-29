@@ -17,7 +17,7 @@ public class CubeWheel : MonoBehaviour
     public Transform wheelMesh;
     
     Rigidbody _rb;
-    CubeController _controller;
+    CubeController _c;
     CubeGroundControl _groundControl;
     
     float _wheelRadius;
@@ -37,13 +37,14 @@ public class CubeWheel : MonoBehaviour
         isDrawWheelVelocities = !isDrawWheelVelocities;
     }
     [HideInInspector]
-    public bool isDrawWheelVelocities;
+    public bool isDrawWheelVelocities, isDrawWheelDisc;
 
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
-        _controller = GetComponentInParent<CubeController>();
+        _c = GetComponentInParent<CubeController>();
         _groundControl= GetComponentInParent<CubeGroundControl>();
+        _wheelRadius = transform.localScale.z / 2;
     }
 
     private float _angle;
@@ -64,46 +65,74 @@ public class CubeWheel : MonoBehaviour
     
     private void FixedUpdate()
     {
-        // Math
-        _wheelRadius = transform.localScale.z / 2;
-        _wheelContactPoint = transform.position - transform.up * _wheelRadius;
+        UpdateWheelState();
+
+        if(!_c.isCanDrive) return;
         
-        _wheelVelocity = _rb.GetPointVelocity(_wheelContactPoint);
-        _wheelForwardVelocity = Vector3.Dot(_wheelVelocity, transform.forward);
-        _wheelLateralVelocity = Vector3.Dot(_wheelVelocity, transform.right);
-        
-        _wheelAcceleration = (_wheelVelocity - _lastWheelVelocity) * Time.fixedTime;
-        _lastWheelVelocity = _wheelVelocity;
-        
-        if(!_controller.isCanDrive) return;
-        
-        // Fx Forward Force
-        _rb.AddForce(forwardForce * transform.forward, ForceMode.Acceleration);
-        
-        if(_groundControl._throttleInput == 0 && Mathf.Abs(_controller.forwardSpeed) > 0.1)
-            //Apply auto braking if no input, simulates drag
-            _rb.AddForce(transform.forward * (5.25f / 4 * -Mathf.Sign(_controller.forwardSpeed) * (1 - Mathf.Abs(_groundControl._throttleInput))), ForceMode.Acceleration);
-        else if (_groundControl._throttleInput == 0 && Mathf.Abs(_controller.forwardSpeed) <= 0.1)
-            // Kill velocity to 0 for small car velocities
-            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
-        
+        ApplyForwardForce();
+
+        ApplyLateralForce();
+    }
+
+    private void ApplyLateralForce()
+    {
         // Fy Lateral Force
         Fy = _wheelLateralVelocity * _groundControl.currentWheelSideFriction * transform.right;
-        _lateralForcePosition = new Vector3(transform.position.x, _controller.cogLow.transform.position.y, transform.position.z);
+        _lateralForcePosition = transform.localPosition;
+        _lateralForcePosition.y = _c.cogLow.localPosition.y;
+        _lateralForcePosition = _c.transform.TransformPoint(_lateralForcePosition);
         _rb.AddForceAtPosition(-Fy, _lateralForcePosition, ForceMode.Acceleration);
     }
 
+    private void ApplyForwardForce()
+    {
+        // Fx Forward Force
+        _rb.AddForce(forwardForce * transform.forward, ForceMode.Acceleration);
+
+        //Apply auto braking if no input, simulates drag
+        if (_c.forwardSpeedAbs >= 0.1)
+        {
+            var dragForce = 5.25f / 4 * _c.forwardSpeedSign * (1 - Mathf.Abs(_groundControl.throttleInput));
+            _rb.AddForce(-transform.forward * dragForce, ForceMode.Acceleration);
+        }
+
+        // Kill velocity to 0 for small car velocities
+        if (forwardForce == 0 && _c.forwardSpeedAbs < 0.1)
+            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
+    }
+
+    private void UpdateWheelState()
+    {
+        _wheelContactPoint = transform.position - transform.up * _wheelRadius;
+        _wheelVelocity = _rb.GetPointVelocity(_wheelContactPoint);
+        _wheelForwardVelocity = Vector3.Dot(_wheelVelocity, transform.forward);
+        _wheelLateralVelocity = Vector3.Dot(_wheelVelocity, transform.right);
+
+        _wheelAcceleration = (_wheelVelocity - _lastWheelVelocity) * Time.fixedTime;
+        _lastWheelVelocity = _wheelVelocity;
+    }
+
     private void OnDrawGizmos()
-    {   
-        if (_rb == null) return; 
+    {
+        _wheelRadius = transform.localScale.z / 2;
+        
+        // Draw wheel disc
+        if (isDrawWheelDisc)
+        {
+            Handles.color = Color.black;
+            if (_rb != null)
+                Handles.color = _c.isCanDrive ? Color.green : Color.red;
+
+            Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, _wheelRadius);
+        }
+        
+        if (_rb == null) return;
         
         // wheelContactPoint
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(_wheelContactPoint, 0.03f);
-
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(transform.position - transform.up * _wheelRadius, 0.02f);
         
-        if (_controller.carState != CubeController.CarStates.AllWheelsSurface &&
-            _controller.carState != CubeController.CarStates.AllWheelsGround) return;      
+        if (_c.isCanDrive != true) return;      
         
         // Draw observed Vx and Vy wheel velocities
         if (isDrawWheelVelocities)
@@ -117,14 +146,16 @@ public class CubeWheel : MonoBehaviour
         DrawRay(_lateralForcePosition, 0.3f * -Fy, Color.magenta);
         
         // Draw observed forces
-        DrawLocalRay(transform.up, _wheelAcceleration.z, transform.forward, Color.yellow);
+        DrawLocalRay(transform.up, _wheelAcceleration.z, transform.forward, Color.gray);
     }
+
+    #region Unitls
 
     void DrawRay(Vector3 from, Vector3 direction, Color c )
     {
         Gizmos.color = c;
         Gizmos.DrawRay(from, direction);
-        Gizmos.DrawSphere(from + direction, 0.03f);
+        Gizmos.DrawSphere(from + direction, 0.02f);
     }
     
     void DrawLocalRay(Vector3 from, float length, Vector3 dir, Color c)
@@ -133,9 +164,7 @@ public class CubeWheel : MonoBehaviour
         Gizmos.DrawRay(transform.position + from, length * dir);
         Gizmos.DrawSphere(transform.position + from + length * dir, 0.03f);
     }
+    
+    #endregion
 }
 
-// Паша25 implementation for Fy
-//var lateralVel = Vector3.Dot(_rb.GetPointVelocity(wheelContactPoint), transform.right);
-//var sideForce = lateralVel / _wheelForces.sideFriction * transform.right;
-//_rb.AddForceAtPosition(-sideForce, transform.position, ForceMode.Acceleration);

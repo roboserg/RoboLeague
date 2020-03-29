@@ -1,0 +1,50 @@
+initialJumpVel = 292			// initial jump velocity impulse
+jumpHoldBonusMaxVelocity = 1458		// force while holding the jump button
+firstJumpBonusMaxTimer = 0.2
+minimumHoldTimer = DeltaTime * 3	// apply jumpHoldBonusMaxVelocity for 3 frames after the jump button is released for the first jump
+stickyforce = -325  			// magnetic force pulling wheels to ground/walls
+stickyTimer = DeltaTime * 3		// still apply stickyforce after the user presses jump
+secondJumpVel = 292
+secondJumpTimeLimit = 1.25 		// 1.25s after first jump input released or 1.45s since start of first jump, whichever is soonest
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Rider specific:
+
+CTRL+ALT+/	Multiline comment
+CTRL+ALT+7	Place curly braces around selection
+
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+//angled raycast
+Vector3 noAngle = transform.right;
+Quaternion spreadAngle = Quaternion.AngleAxis(-15, new Vector3(0, 1, 0));
+Vector3 newVector = spreadAngle * noAngle;
+Ray ray = new Ray (transform.position, newVector);
+        
+Gizmos.DrawSphere(transform.position + newVector, 0.02f);
+ 
+//if(Physics.Raycast(transform.position, ray.direction, out var hit, 1)
+Gizmos.DrawRay(transform.position, ray.direction);
+Gizmos.color = Color.red;
+Gizmos.DrawRay(transform.position, transform.right);
+
+
+
+// On entering play mode 
+internal static class MyClass
+{
+    [RuntimeInitializeOnLoadMethod]
+    static void OnRuntimeMethodLoad()
+    {
+        //Selection.activeGameObject = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<BoxCollider>().gameObject;
+        //SceneView.FrameLastActiveSceneView();
+    }
+}
+
+
+// Паша25 implementation for Fy
+//var lateralVel = Vector3.Dot(_rb.GetPointVelocity(wheelContactPoint), transform.right);
+//var sideForce = lateralVel / _wheelForces.sideFriction * transform.right;
+//_rb.AddForceAtPosition(-sideForce, transform.position, ForceMode.Acceleration);

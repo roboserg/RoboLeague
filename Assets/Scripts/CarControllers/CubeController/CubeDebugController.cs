@@ -22,10 +22,10 @@ public class CubeDebugController : MonoBehaviour
     [Button("@\"Draw All Wheel Discs: \" + _isDrawWheelDisc", ButtonSizes.Large)]
     void IsDrawWheelDisc()
     {
-        var sphereArray = GetComponentsInChildren<CubeSphereCollider>();
+        var wheelArray = GetComponentsInChildren<CubeWheel>();
         _isDrawWheelDisc = !_isDrawWheelDisc;
 
-        foreach (var sphere in sphereArray)
+        foreach (var sphere in wheelArray)
         {
             sphere.isDrawWheelDisc = !sphere.isDrawWheelDisc;
         }

@@ -116,6 +116,7 @@
               <e p="CubeSphereCollider.cs" t="Include" />
               <e p="CubeSphereTrigger.cs" t="Include" />
               <e p="CubeWheel.cs" t="Include" />
+              <e p="notes.txt" t="Include" />
               <e p="test.cs" t="Include" />
               <e p="todo.txt" t="Include" />
             </e>
@@ -132,6 +133,11 @@
               <e p="SphereController.cs" t="Include" />
             </e>
           </e>
+          <e p="Managers" t="Include">
+            <e p="AudioManager.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="InputManager.cs" t="Include" />
+          </e>
         </e>
         <e p="Shaders" t="Include">
           <e p="CheckerBoardGlobal.shader" t="Include" />
@@ -142,6 +148,7 @@
           <e p="FurShader_20.shader" t="Include" />
           <e p="FurShader_20_mask.shader" t="Include" />
         </e>
+        <e p="SteeringCurve.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

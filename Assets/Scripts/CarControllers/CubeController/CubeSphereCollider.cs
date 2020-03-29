@@ -44,25 +44,23 @@ public class CubeSphereCollider : MonoBehaviour
         Gizmos.color = Color.red;
         Handles.color = Color.red;
 
+        Vector3 spherePos;
+        if (IsSurfaceContact())
+        {
+            Gizmos.color = Color.green;
+            Handles.color = Color.green;
+            spherePos = _contactPoint;
+        }
+        else spherePos = rayEndPoint;
+
+        // Draw vertical lines for ground contact for visual feedback
         if (isDrawRaycast)
         {
-            // Draw vertical lines for ground contact for visual feedback
-            if (IsSurfaceContact())
-            {
-                Gizmos.color = Color.green;
-                Handles.color = Color.green;
-                Gizmos.DrawSphere(_contactPoint, 0.02f);
-            }
-            else Gizmos.DrawSphere(rayEndPoint, 0.02f);
-
             // Draw Raycast ray
             Gizmos.DrawLine(transform.position, rayEndPoint);
+            Gizmos.DrawSphere(spherePos, 0.02f);
             // Draw vertical line as ground hit indicators         
             Gizmos.DrawLine(transform.position, transform.position + transform.up * 0.5f);
         }
-
-        // Draw wheel disc
-        if(isDrawWheelDisc)
-            Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, transform.localScale.z / 2);
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - Map
   - SphereCollider
   - BodyCollider
+  - CarCameraTarget
   layers:
   - Default
   - TransparentFX
