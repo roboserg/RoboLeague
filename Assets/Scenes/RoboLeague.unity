@@ -17195,7 +17195,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.3
+  m_Time: 0.6
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -17204,7 +17204,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.25714332
+        value: 0.55714226
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -17225,8 +17225,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.5176471}
-      key1: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 0.51904494, b: 0, a: 1}
+      key1: {r: 1, g: 0.41291898, b: 0, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -17255,7 +17255,7 @@ TrailRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
@@ -17273,7 +17273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f49d78344b8dae4f95c841015598336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailTime: 0.5
+  trailTime: 0.7
 --- !u!1 &850044589
 GameObject:
   m_ObjectHideFlags: 0
@@ -39519,8 +39519,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1907187652}
   - component: {fileID: 1907187654}
-  - component: {fileID: 1907187653}
   - component: {fileID: 1907187651}
+  - component: {fileID: 1907187653}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged

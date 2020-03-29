@@ -52,3 +52,9 @@ internal static class MyClass
 //var sideForce = lateralVel / _wheelForces.sideFriction * transform.right;
 //_rb.AddForceAtPosition(-sideForce, transform.position, ForceMode.Acceleration);
 
+//GUI
+    void OnGUI()
+    {
+        // Make a text field that modifies stringToEdit.
+        GUILayout.TextField((3.6f *_rb.velocity.magnitude).ToString() + " km/h", 25);
+    }

@@ -20,7 +20,7 @@ public class CubeGroundControl : MonoBehaviour
     CubeWheel[] _wheelArray;
     
     Rigidbody _rb;
-    CubeController _controller;
+    CubeController _c;
     
     float naiveRotationForce = 5;
     float naiveRotationDampeningForce = -10;
@@ -30,7 +30,7 @@ public class CubeGroundControl : MonoBehaviour
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
-        _controller = GetComponent<CubeController>();
+        _c = GetComponent<CubeController>();
         _wheelArray = GetComponentsInChildren<CubeWheel>();
     }
 
@@ -57,14 +57,20 @@ public class CubeGroundControl : MonoBehaviour
     
     private void FixedUpdate()
     {
+        // Throttle
         var Fx = CalculateForwardForce();
-        
+
+        // Braking
+        if(_c.forwardSpeedSign != Mathf.Sign(throttleInput))
+            Fx += -1 * _c.forwardSpeedSign * 35;
+
+        // Steering
         currentSteerAngle = CalculateSteerAngle();
 
         // Apply forces and steer angle to each wheel
         foreach (var w in _wheelArray)
         {
-            if (_controller.isCanDrive) w.forwardForce = Fx / 4;
+            if (_c.isCanDrive) w.forwardForce = Fx / 4;
             
             if (w.wheelFL || w.wheelFR) 
                 w.steerAngle = currentSteerAngle;
@@ -74,31 +80,28 @@ public class CubeGroundControl : MonoBehaviour
     private float CalculateSteerAngle()
     {
         steerInput = Mathf.MoveTowards(steerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime * steerSensivity);
-        return (1 / GetTurnRadius(_controller.forwardSpeed)) * turnRadiusCoefficient * steerInput;
+        return (1 / GetTurnRadius(_c.forwardSpeed)) * turnRadiusCoefficient * steerInput;
     }
 
     private float CalculateForwardForce()
     {
         if (GameManager.InputManager.isBoost)
-            throttleInput = 1;
+            return 1 * GetThrottleSpeed(_c.forwardSpeedAbs);
         
-        float Fx = throttleInput * GetThrottleSpeed();
-        
-        return Fx;
+        return  throttleInput * GetThrottleSpeed(_c.forwardSpeedAbs);
     }
 
-    float GetThrottleSpeed()
+    float GetThrottleSpeed(float speed)
     {
+        speed = Mathf.Abs(speed);
         float throttle = 0;
-
-        float myForwardSpeed = Mathf.Abs(_controller.forwardSpeed);
-
-        if (myForwardSpeed > (1410 / 100))
+        
+        if (speed > (1410 / 100))
             throttle = 0;
-        else if (myForwardSpeed > (1400 / 100))
-            throttle = CubeController.Scale(14, 14.1f, 1.6f, 0, myForwardSpeed);
-        else if (myForwardSpeed <= (1400 / 100))
-            throttle = CubeController.Scale(0, 14, 16, 1.6f, myForwardSpeed);
+        else if (speed > (1400 / 100))
+            throttle = CubeController.Scale(14, 14.1f, 1.6f, 0, speed);
+        else if (speed <= (1400 / 100))
+            throttle = CubeController.Scale(0, 14, 16, 1.6f, speed);
 
         return throttle;
     }
@@ -128,17 +131,17 @@ public class CubeGroundControl : MonoBehaviour
     
     private void NaiveGroundControl()
     {
-        if (_controller.carState != CubeController.CarStates.AllWheelsSurface &&
-            _controller.carState != CubeController.CarStates.AllWheelsGround) return;
+        if (_c.carState != CubeController.CarStates.AllWheelsSurface &&
+            _c.carState != CubeController.CarStates.AllWheelsGround) return;
 
         // Throttle
         var throttleInput = Input.GetAxis("Vertical");
-        float Fx = throttleInput * GetThrottleSpeed();
+        float Fx = throttleInput * GetThrottleSpeed(_c.forwardSpeedAbs);
         _rb.AddForceAtPosition(Fx * transform.forward, _rb.transform.TransformPoint(_rb.centerOfMass),
             ForceMode.Acceleration);
 
         // Auto dampening
-        _rb.AddForce(transform.forward * (5.25f * -Mathf.Sign(_controller.forwardSpeed) * (1 - Mathf.Abs(throttleInput))),
+        _rb.AddForce(transform.forward * (5.25f * -Mathf.Sign(_c.forwardSpeed) * (1 - Mathf.Abs(throttleInput))),
             ForceMode.Acceleration);
         // alternative auto dampening
         //if (throttleInput == 0) _rb.AddForce(transform.forward * (5.25f * -Mathf.Sign(forwardSpeed)), ForceMode.Acceleration); 

@@ -65,10 +65,4 @@ public class Ball : MonoBehaviour
         //        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y - SlowVelocityGround, rb.velocity.z);
         //    }
     }
-    
-    void OnGUI()
-    {
-        // Make a text field that modifies stringToEdit.
-        GUILayout.TextField((3.6f *_rb.velocity.magnitude).ToString() + " km/h", 25);
-    }
 }
