@@ -44,6 +44,19 @@ public class CubeDebugController : MonoBehaviour
         }
     }
     bool _isDrawRaycasts = false;
+
+    bool _isDrawForces = false;
+    [Button("@\"Draw Wheel Forces: \" + _isDrawForces", ButtonSizes.Large)]
+    void IsDrawForces()
+    {
+        _isDrawForces = !_isDrawForces;
+        var wheelArray = GetComponentsInChildren<CubeWheel>();
+
+        foreach (var w in wheelArray)
+        {
+            w.isDrawForces = !w.isDrawForces;
+        }
+    }
     
     void Start()
     {

@@ -9,10 +9,11 @@ public class CubeSphereCollider : MonoBehaviour
 {
     public bool isTouchingSurface = false;
     public float _rayOffset = 0.05f;
-    
+
+    private Rigidbody _rb;
     CubeController _controller;
     float _rayLen;
-    Vector3 _contactPoint;
+    Vector3 _contactPoint, _contactNormal;
     
     [HideInInspector]
     // Debug options
@@ -21,12 +22,24 @@ public class CubeSphereCollider : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponentInParent<CubeController>();
+        _rb = GetComponentInParent<Rigidbody>();
         _rayLen = transform.localScale.x / 2 + _rayOffset;
     }
-    
+
     private void FixedUpdate()
     {
         isTouchingSurface = IsSurfaceContact();
+
+        ApplyStickyForces();
+    }
+
+    private void ApplyStickyForces()
+    {
+        if (isTouchingSurface)
+        {
+            var StickyForce = -(325 / 100) / 4 * _contactNormal;
+            _rb.AddForceAtPosition(StickyForce, _contactPoint, ForceMode.Acceleration);
+        }
     }
 
     // Does a wheel touches the ground? Using raycasts, not sphere collider contact point, since no suspention
@@ -34,8 +47,25 @@ public class CubeSphereCollider : MonoBehaviour
     {
         var isHit = Physics.Raycast(transform.position, -transform.up, out var hit, _rayLen);
         _contactPoint = hit.point;
+        _contactNormal = hit.normal;
         return false || isHit;
     }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        isTouchingSurface = true;
+    }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     Debug.Log("OnTriggerEnter" + other.GetComponent<Collider>().name);
+    // }
+    //
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     Debug.Log("OnTriggerExit" + other.GetComponent<Collider>().name);
+    // }
 
     private void OnDrawGizmos()
     {
@@ -62,5 +92,7 @@ public class CubeSphereCollider : MonoBehaviour
             // Draw vertical line as ground hit indicators         
             Gizmos.DrawLine(transform.position, transform.position + transform.up * 0.5f);
         }
+        
+        Debug.DrawRay(_contactPoint, _contactNormal);
     }
 }

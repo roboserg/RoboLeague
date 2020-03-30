@@ -32,7 +32,7 @@ public class CubeController : MonoBehaviour
     static readonly GUIStyle Style = new GUIStyle();
     CubeSphereCollider[] _sphereColliders;
     public GameObject sceneViewFocusObject;
-    
+    public CubeParticleSystem cubeParticleSystem;
 
     void Start()
     {
@@ -49,6 +49,10 @@ public class CubeController : MonoBehaviour
         // Lock scene view camera to the car
         Selection.activeGameObject = sceneViewFocusObject;
         SceneView.lastActiveSceneView.FrameSelected(true);
+
+        // Activate ParticleSystems GameObject
+        if (Resources.FindObjectsOfTypeAll<CubeParticleSystem>()[0] != null)
+            Resources.FindObjectsOfTypeAll<CubeParticleSystem>()[0].gameObject.SetActive(true);
     }
 
     private void Update()

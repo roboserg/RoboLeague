@@ -28,7 +28,6 @@ public class CubeWheel : MonoBehaviour
     float _wheelLateralVelocity;
     Vector3 _wheelContactPoint;
     Vector3 _lateralForcePosition;
-    //private Vector3 wheelVelocityLocal;
 
     [Title("Debug Draw Options")]
     [Button("@\"Draw Wheel Velocities: \" + _isDrawWheelVelocities", ButtonSizes.Large)]
@@ -37,7 +36,7 @@ public class CubeWheel : MonoBehaviour
         isDrawWheelVelocities = !isDrawWheelVelocities;
     }
     [HideInInspector]
-    public bool isDrawWheelVelocities, isDrawWheelDisc;
+    public bool isDrawWheelVelocities, isDrawWheelDisc, isDrawForces;
 
     void Start()
     {
@@ -97,8 +96,8 @@ public class CubeWheel : MonoBehaviour
         }
 
         // Kill velocity to 0 for small car velocities
-        if (forwardForce == 0 && _c.forwardSpeedAbs < 0.1)
-            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
+         if (forwardForce == 0 && _c.forwardSpeedAbs < 0.1)
+             _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
     }
 
     private void UpdateWheelState()
@@ -141,12 +140,15 @@ public class CubeWheel : MonoBehaviour
             DrawRay(_wheelContactPoint, (_wheelForwardVelocity * 0.1f) * transform.forward, Color.blue);
             DrawRay(_wheelContactPoint, (_wheelLateralVelocity * 0.1f) * transform.right, Color.red);    
         }
-        
-        // Draw induced lateral friction Fy
-        DrawRay(_lateralForcePosition, 0.3f * -Fy, Color.magenta);
-        
-        // Draw observed forces
-        DrawLocalRay(transform.up, _wheelAcceleration.z, transform.forward, Color.gray);
+
+        if(isDrawForces)
+        {
+            // Draw induced lateral friction Fy
+            DrawRay(_lateralForcePosition, 0.3f * -Fy, Color.magenta);
+            
+            // Draw observed forces
+            DrawLocalRay(transform.up, _wheelAcceleration.z, transform.forward, Color.gray);
+        }
     }
 
     #region Unitls
