@@ -57,15 +57,4 @@ public class CubeDebugController : MonoBehaviour
             w.isDrawForces = !w.isDrawForces;
         }
     }
-    
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

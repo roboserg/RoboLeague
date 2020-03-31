@@ -631,7 +631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &279860897
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6706,15 +6706,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steerAngle: 0
-  forwardForce: 0
-  Fy: {x: 0, y: 0, z: 0}
+  Fx: 0
   wheelFL: 0
   wheelFR: 0
   wheelRL: 1
   wheelRR: 0
   wheelMesh: {fileID: 5136046490304972089}
-  isDrawWheelVelocities: 0
-  isDrawWheelDisc: 1
+  isDrawWheelVelocities: 1
+  isDrawWheelDisc: 0
   isDrawForces: 0
 --- !u!1 &595860660
 GameObject:
@@ -32881,8 +32880,8 @@ GameObject:
   - component: {fileID: 1276522807}
   - component: {fileID: 1276522806}
   - component: {fileID: 1276522805}
-  - component: {fileID: 1276522808}
   - component: {fileID: 1276522809}
+  - component: {fileID: 1276522808}
   m_Layer: 8
   m_Name: FL
   m_TagString: SphereCollider
@@ -33070,6 +33069,7 @@ GameObject:
   - component: {fileID: 1370048098}
   - component: {fileID: 1370048097}
   - component: {fileID: 1370048096}
+  - component: {fileID: 1370048100}
   - component: {fileID: 1370048094}
   m_Layer: 8
   m_Name: CubeController
@@ -33100,7 +33100,6 @@ MonoBehaviour:
   carState: 0
   cogLow: {fileID: 850044590}
   sceneViewFocusObject: {fileID: 850044589}
-  cubeParticleSystem: {fileID: 0}
 --- !u!54 &1370048094
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -33178,15 +33177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 632d9afdf18b1cc448b6bc66407c5311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steerSensivity: 10
   turnRadiusCoefficient: 50
   currentSteerAngle: 0
   driftTime: 3
   currentWheelSideFriction: 10
   wheelSideFriction: 8
   wheelSideFrictionDrift: 0.5
-  throttleInput: 0
-  steerInput: 0
 --- !u!114 &1370048099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33197,6 +33193,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21fac67fa63ff654a915e32ce231068c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1370048100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370048092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498cd74abbec0fd40a63836e21610c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1381964343
@@ -33347,15 +33355,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steerAngle: 0
-  forwardForce: 0
-  Fy: {x: 0, y: 0, z: 0}
+  Fx: 0
   wheelFL: 0
   wheelFR: 1
   wheelRL: 0
   wheelRR: 0
   wheelMesh: {fileID: 5141208236129452049}
   isDrawWheelVelocities: 0
-  isDrawWheelDisc: 1
+  isDrawWheelDisc: 0
   isDrawForces: 0
 --- !u!1 &1454353713
 GameObject:
@@ -39495,15 +39502,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steerAngle: 0
-  forwardForce: 0
-  Fy: {x: 0, y: 0, z: 0}
+  Fx: 0
   wheelFL: 0
   wheelFR: 0
   wheelRL: 0
   wheelRR: 1
   wheelMesh: {fileID: 5141408967537233807}
-  isDrawWheelVelocities: 0
-  isDrawWheelDisc: 1
+  isDrawWheelVelocities: 1
+  isDrawWheelDisc: 0
   isDrawForces: 0
 --- !u!1 &1907187650
 GameObject:
@@ -39536,7 +39542,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3647dc28d553f054086959c1d51bdadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throttleInput: 0
+  steerInput: 0
+  yawInput: 0
+  pitchInput: 0
+  rollInput: 0
   isBoost: 0
+  isDrift: 0
+  isAirRoll: 0
+  isJump: 0
+  isJumpUp: 0
+  isJumpDown: 0
   axisName: Horizontal
   sensitivityCurve:
     serializedVersion: 2
@@ -40001,8 +40017,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2055948158}
-  - component: {fileID: 2055948160}
-  - component: {fileID: 2055948159}
   - component: {fileID: 2055948161}
   m_Layer: 8
   m_Name: FL
@@ -40025,53 +40039,6 @@ Transform:
   m_Father: {fileID: 600793202}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &2055948159
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055948157}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9fe49c64afd9961458d42c3ff50d077f, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &2055948160
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055948157}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &2055948161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40085,15 +40052,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steerAngle: 0
-  forwardForce: 0
-  Fy: {x: 0, y: 0, z: 0}
+  Fx: 0
   wheelFL: 1
   wheelFR: 0
   wheelRL: 0
   wheelRR: 0
   wheelMesh: {fileID: 5136234058821885859}
-  isDrawWheelVelocities: 0
-  isDrawWheelDisc: 1
+  isDrawWheelVelocities: 1
+  isDrawWheelDisc: 0
   isDrawForces: 0
 --- !u!1 &2077504888
 GameObject:

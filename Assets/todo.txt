@@ -13,9 +13,8 @@ Features TODO:
 Problems:
     - lateral speed goes behind the wheels
     - Camera fixes (maybe use Cinemamachine, camera as in Kart game)
-    - Aerial CoM
+    - Aerial CoM (?)
     - Breakdancing (sphere collider touches the ground but not the raycast, enables aircontrol on the ground)
-    - No fake ground drag when upside down
     - No fake friction when upside down on the ground
 
 Low priority:

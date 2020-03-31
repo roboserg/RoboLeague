@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(CubeController))]
 public class CubeGroundControl : MonoBehaviour
 {
     [Header("Steering")]
-    public float steerSensivity;
-    public float turnRadiusCoefficient = 40;
+    public float turnRadiusCoefficient = 50;
     public float currentSteerAngle;
     
     [Header("Drift")]
-    public float driftTime;
+    public float driftTime = 3;
     public float currentWheelSideFriction = 10;
     public float wheelSideFriction = 8;
     public float wheelSideFrictionDrift = 0.5f;
     
-    CubeWheel[] _wheelArray;
-    
     Rigidbody _rb;
     CubeController _c;
-    
-    float naiveRotationForce = 5;
-    float naiveRotationDampeningForce = -10;
-
-    [HideInInspector] public float throttleInput = 0, steerInput = 0;
+    CubeWheel[] _wheelArray;
     
     void Start()
     {
@@ -36,63 +26,57 @@ public class CubeGroundControl : MonoBehaviour
 
     private void Update()
     {
-        //TODO: Move input processing to a dedicated input manager static class
-        // Process Input 
-        {
-            throttleInput = 0;
-            if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("RT") > 0)
-                throttleInput = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("RT"));
-            else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("LT") < 0)
-                throttleInput = Mathf.Min(Input.GetAxis("Vertical"), Input.GetAxis("LT"));
-
-            // Sliding / drifting, lowers the wheel side friction when drifting
-            if (Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift))
-                currentWheelSideFriction = Mathf.Lerp(currentWheelSideFriction, wheelSideFrictionDrift,
-                    Time.deltaTime * driftTime);
-            else
-                currentWheelSideFriction =
-                    Mathf.Lerp(currentWheelSideFriction, wheelSideFriction, Time.deltaTime * driftTime);
-        }
+        // Sliding / drifting, lowers the wheel side friction when drifting
+        var currentDrift = GameManager.InputManager.isDrift ? wheelSideFrictionDrift : wheelSideFriction;
+        currentWheelSideFriction = Mathf.MoveTowards(currentWheelSideFriction, currentDrift, Time.deltaTime * driftTime);
     }
     
     private void FixedUpdate()
     {
+        var throttleInput = GameManager.InputManager.throttleInput;
+        
         // Throttle
-        var Fx = CalculateForwardForce();
+        float forwardAcceleration = 0;
 
+        if (GameManager.InputManager.isBoost)
+            forwardAcceleration = GetForwardAcceleration(_c.forwardSpeedAbs);
+        else
+            forwardAcceleration = throttleInput * GetForwardAcceleration(_c.forwardSpeedAbs);
+        
         // Braking
-        if(_c.forwardSpeedSign != Mathf.Sign(throttleInput))
-            Fx += -1 * _c.forwardSpeedSign * 35;
-
+        if(_c.forwardSpeedSign != Mathf.Sign(throttleInput) && throttleInput != 0)
+            forwardAcceleration += -1 * _c.forwardSpeedSign * 35;
+        
         // Steering
         currentSteerAngle = CalculateSteerAngle();
 
         // Apply forces and steer angle to each wheel
-        foreach (var w in _wheelArray)
+        foreach (var wheel in _wheelArray)
         {
-            if (_c.isCanDrive) w.forwardForce = Fx / 4;
+            //TODO: Func. call like this below OR Wheel class fetches data from this class?
+            // Also probably should be an interface to a concrete implementation. Same for the NaiveGroundControl below.
+            if (_c.isCanDrive) 
+                wheel.ApplyForwardForce(forwardAcceleration / 4);
             
-            if (w.wheelFL || w.wheelFR) 
-                w.steerAngle = currentSteerAngle;
+            if (wheel.wheelFL || wheel.wheelFR) 
+                wheel.RotateWheels(currentSteerAngle);
         }
     }
 
+    private float CalculateForwardForce(float input, float speed)
+    {
+        return  input * GetForwardAcceleration(_c.forwardSpeedAbs);
+    }
+    
     private float CalculateSteerAngle()
     {
-        steerInput = Mathf.MoveTowards(steerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime * steerSensivity);
-        return (1 / GetTurnRadius(_c.forwardSpeed)) * turnRadiusCoefficient * steerInput;
+        var curvature = 1 / GetTurnRadius(_c.forwardSpeed);
+        return GameManager.InputManager.steerInput *  curvature * turnRadiusCoefficient;
     }
-
-    private float CalculateForwardForce()
+    
+    static float GetForwardAcceleration(float speed)
     {
-        if (GameManager.InputManager.isBoost)
-            return 1 * GetThrottleSpeed(_c.forwardSpeedAbs);
-        
-        return  throttleInput * GetThrottleSpeed(_c.forwardSpeedAbs);
-    }
-
-    float GetThrottleSpeed(float speed)
-    {
+        // Replicates acceleration curve from RL, depends on current car forward velocity
         speed = Mathf.Abs(speed);
         float throttle = 0;
         
@@ -105,8 +89,8 @@ public class CubeGroundControl : MonoBehaviour
 
         return throttle;
     }
-    
-    float GetTurnRadius(float speed)
+
+    static float GetTurnRadius(float speed)
     {
         float forwardSpeed = Mathf.Abs(speed);
         float turnRadius = 0;
@@ -129,6 +113,8 @@ public class CubeGroundControl : MonoBehaviour
         return turnRadius;
     }
     
+    float _naiveRotationForce = 5;
+    float _naiveRotationDampeningForce = -10;
     private void NaiveGroundControl()
     {
         if (_c.carState != CubeController.CarStates.AllWheelsSurface &&
@@ -136,7 +122,7 @@ public class CubeGroundControl : MonoBehaviour
 
         // Throttle
         var throttleInput = Input.GetAxis("Vertical");
-        float Fx = throttleInput * GetThrottleSpeed(_c.forwardSpeedAbs);
+        float Fx = throttleInput * GetForwardAcceleration(_c.forwardSpeedAbs);
         _rb.AddForceAtPosition(Fx * transform.forward, _rb.transform.TransformPoint(_rb.centerOfMass),
             ForceMode.Acceleration);
 
@@ -147,9 +133,8 @@ public class CubeGroundControl : MonoBehaviour
         //if (throttleInput == 0) _rb.AddForce(transform.forward * (5.25f * -Mathf.Sign(forwardSpeed)), ForceMode.Acceleration); 
 
         // Steering
-        _rb.AddTorque(transform.up * (Input.GetAxis("Horizontal") * naiveRotationForce), ForceMode.Acceleration);
-        _rb.AddTorque(transform.up * (naiveRotationDampeningForce * (1 - Mathf.Abs(Input.GetAxis("Horizontal"))) *
+        _rb.AddTorque(transform.up * (Input.GetAxis("Horizontal") * _naiveRotationForce), ForceMode.Acceleration);
+        _rb.AddTorque(transform.up * (_naiveRotationDampeningForce * (1 - Mathf.Abs(Input.GetAxis("Horizontal"))) *
                                       transform.InverseTransformDirection(_rb.angularVelocity).y), ForceMode.Acceleration);
     }
 }
-

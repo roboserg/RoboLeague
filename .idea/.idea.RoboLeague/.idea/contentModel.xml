@@ -107,6 +107,7 @@
           <e p="CarControllers" t="Include">
             <e p="CubeController" t="Include">
               <e p="CubeAirControl.cs" t="Include" />
+              <e p="CubeBoosting.cs" t="Include" />
               <e p="CubeBoxTrigger.cs" t="Include" />
               <e p="CubeController.cs" t="Include" />
               <e p="CubeDebugController.cs" t="Include" />

@@ -20,6 +20,7 @@ public class CubeParticleSystem : MonoBehaviour
         _trails[0].time = _trails[1].time = 0;
         firePs.SetActive(false);
 
+        windPs.transform.position += new Vector3(0, 0, 10);
     }
 
     void Update()

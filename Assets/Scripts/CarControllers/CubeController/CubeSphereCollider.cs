@@ -29,16 +29,15 @@ public class CubeSphereCollider : MonoBehaviour
     private void FixedUpdate()
     {
         isTouchingSurface = IsSurfaceContact();
-
-        ApplyStickyForces();
+        //ApplyStickyForces();
     }
 
     private void ApplyStickyForces()
     {
         if (isTouchingSurface)
         {
-            var StickyForce = -(325 / 100) / 4 * _contactNormal;
-            _rb.AddForceAtPosition(StickyForce, _contactPoint, ForceMode.Acceleration);
+            var stickyForce = -(325 / 100) / 4 * _contactNormal;
+            _rb.AddForceAtPosition(stickyForce, _contactPoint, ForceMode.Acceleration);
         }
     }
 
@@ -50,8 +49,6 @@ public class CubeSphereCollider : MonoBehaviour
         _contactNormal = hit.normal;
         return false || isHit;
     }
-
-
     private void OnTriggerStay(Collider other)
     {
         isTouchingSurface = true;
