@@ -1,48 +1,58 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
-    public float randomSpeed = 40;
-    public float initialForce = 400;
-    public float hitMultiplier = 50;
+    [SerializeField] [Range(10,80)] float randomSpeed = 40;
+    [SerializeField] float initialForce = 400;
+    [SerializeField] float hitMultiplier = 50;
     
     Rigidbody _rb;
+    Transform _transform;
     
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.velocity = new Vector3(0, 0, 0);
+        _transform = this.transform;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
+        //TODO: move inputs to the InputController
         if (Input.GetKeyDown(KeyCode.T))
-        {
-            float speed = Random.Range(randomSpeed - 10, randomSpeed + 10);
-            Vector2 randomCircle = Random.insideUnitCircle.normalized;
-            Vector3 direction = new Vector3(randomCircle.x, Random.Range(-0.5f, 0.5f), randomCircle.y).normalized;
-            _rb.velocity = direction * speed;
-        }
+            ShootInRandomDirection(randomSpeed);
+        
         if (Input.GetKeyDown(KeyCode.R))
-        {
-            Vector3 desired = new Vector3(0, 12.23f, 0f);
-            transform.position = desired;
-            _rb.velocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero; 
-        }
-
+            ResetBall();
+        
         if (Input.GetButtonDown("Select"))
-        {
-            transform.position = new Vector3(7.76f, 2.98f, 0f);
-            _rb.velocity = new Vector3(30, 10,0);
-            _rb.angularVelocity = Vector3.zero;
-        }
+            ResetShot(new Vector3(7.76f, 2.98f, 0f));
+    }
+    
+    private void ResetShot(Vector3 pos)
+    {
+        _transform.position = pos;
+        _rb.velocity = new Vector3(30, 10, 0);
+        _rb.angularVelocity = Vector3.zero;
+    }
+
+    [ContextMenu("ResetBall")]
+    private void ResetBall()
+    {
+        var desired = new Vector3(0, 12.23f, 0f);
+        _transform.SetPositionAndRotation(desired, Quaternion.identity);
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+    }
+
+    [ContextMenu("ShootInRandomDirection")]
+    private void ShootInRandomDirection(float speed)
+    {
+        float speedRange = Random.Range(speed - 10, speed + 10);
+        var randomDirection = Random.insideUnitCircle.normalized;
+        var direction = new Vector3(randomDirection.x, Random.Range(-0.5f, 0.5f), randomDirection.y).normalized;
+        _rb.velocity = direction * speedRange;
     }
 
     private void OnCollisionEnter(Collision col)
@@ -50,12 +60,10 @@ public class Ball : MonoBehaviour
 
         if (col.gameObject.CompareTag("Player"))
         {
-            {
-                float force = initialForce + col.rigidbody.velocity.magnitude * hitMultiplier;
-                //Vector3 dir = transform.position - col.contacts[0].point;
-                Vector3 dir = transform.position - col.transform.position;
-                _rb.AddForce(dir.normalized * force);
-            }
+            float force = initialForce + col.rigidbody.velocity.magnitude * hitMultiplier;
+            //Vector3 dir = transform.position - col.contacts[0].point;
+            var dir = transform.position - col.transform.position;
+            _rb.AddForce(dir.normalized * force);
         }
 
         //if (col.gameObject.tag == "Ground")

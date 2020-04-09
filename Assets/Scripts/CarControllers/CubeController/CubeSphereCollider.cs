@@ -1,95 +1,92 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class CubeSphereCollider : MonoBehaviour
 {
     public bool isTouchingSurface = false;
-    public float _rayOffset = 0.05f;
-
-    private Rigidbody _rb;
-    CubeController _controller;
-    float _rayLen;
-    Vector3 _contactPoint, _contactNormal;
     
-    [HideInInspector]
-    // Debug options
-    public bool isDrawWheelDisc = false, isDrawRaycast = false;
-
-    private void Awake()
+    //Raycast options
+    float _rayLen, _rayOffset = 0.05f;
+    Vector3 _rayContactPoint, _rayContactNormal;
+    
+    Rigidbody _rb;
+    
+    private void Start()
     {
-        _controller = GetComponentInParent<CubeController>();
         _rb = GetComponentInParent<Rigidbody>();
         _rayLen = transform.localScale.x / 2 + _rayOffset;
     }
-
+    
     private void FixedUpdate()
     {
-        isTouchingSurface = IsSurfaceContact();
-        //ApplyStickyForces();
-    }
-
-    private void ApplyStickyForces()
-    {
+        isTouchingSurface = IsRayContact() || _isColliderContact;
+        
+        //TODO: this class should only do raycasts and sphere collider ground detection. Move to CubeWheel or CubeController
         if (isTouchingSurface)
-        {
-            var stickyForce = -(325 / 100) / 4 * _contactNormal;
-            _rb.AddForceAtPosition(stickyForce, _contactPoint, ForceMode.Acceleration);
-        }
+            ApplyStickyForces(StickyForceConstant*5, _rayContactPoint, -_rayContactNormal);
     }
 
-    // Does a wheel touches the ground? Using raycasts, not sphere collider contact point, since no suspention
-    bool IsSurfaceContact()
+    const int StickyForceConstant = 325 / 100;
+    private void ApplyStickyForces(float stickyForce, Vector3 position, Vector3 dir)
+    {
+        var force = stickyForce / 4 * dir;
+        
+        //_rb.AddForceAtPosition(stickyForce, _contactPoint, ForceMode.Acceleration);
+        _rb.AddForceAtPosition(force, position, ForceMode.Acceleration);
+        //Debug.DrawRay(position, force, Color.blue, 0, true);
+    }
+
+    // Does a wheel touches the ground? Using raycasts, not sphere collider contact point, since no suspension
+    bool IsRayContact()
     {
         var isHit = Physics.Raycast(transform.position, -transform.up, out var hit, _rayLen);
-        _contactPoint = hit.point;
-        _contactNormal = hit.normal;
+        _rayContactPoint = hit.point;
+        _rayContactNormal = hit.normal;
         return false || isHit;
     }
-    private void OnTriggerStay(Collider other)
+
+    bool _isColliderContact;
+    private void OnTriggerEnter(Collider other)
     {
-        isTouchingSurface = true;
+        _isColliderContact = true;
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        _isColliderContact = false;
     }
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     Debug.Log("OnTriggerEnter" + other.GetComponent<Collider>().name);
-    // }
-    //
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     Debug.Log("OnTriggerExit" + other.GetComponent<Collider>().name);
-    // }
-
+    public bool isDrawContactLines = false;
     private void OnDrawGizmos()
+    {
+        if(isDrawContactLines)
+            DrawContactLines();
+        
+        // Sticky forces
+        //Debug.DrawRay(_contactPoint, _contactNormal);
+        //Gizmos.DrawSphere(_rayContactPoint, 0.02f);
+    }
+    
+    public void DrawContactLines()    // Draw vertical lines for ground contact for visual feedback
     {
         _rayLen = transform.localScale.x / 2 + _rayOffset;
         var rayEndPoint = transform.position - (transform.up * _rayLen);
         Gizmos.color = Color.red;
         Handles.color = Color.red;
 
-        Vector3 spherePos;
-        if (IsSurfaceContact())
+        Vector3 sphereContactPoint;
+        if (isTouchingSurface)
         {
             Gizmos.color = Color.green;
             Handles.color = Color.green;
-            spherePos = _contactPoint;
+            sphereContactPoint = _rayContactPoint;
         }
-        else spherePos = rayEndPoint;
-
-        // Draw vertical lines for ground contact for visual feedback
-        if (isDrawRaycast)
-        {
-            // Draw Raycast ray
-            Gizmos.DrawLine(transform.position, rayEndPoint);
-            Gizmos.DrawSphere(spherePos, 0.02f);
-            // Draw vertical line as ground hit indicators         
-            Gizmos.DrawLine(transform.position, transform.position + transform.up * 0.5f);
-        }
+        else sphereContactPoint = rayEndPoint;
         
-        Debug.DrawRay(_contactPoint, _contactNormal);
+        // Draw Raycast ray
+        Gizmos.DrawLine(transform.position, rayEndPoint);
+        Gizmos.DrawSphere(sphereContactPoint, 0.03f);
+        // Draw vertical line as ground hit indicators         
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * 0.5f);
     }
 }

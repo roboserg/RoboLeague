@@ -25,14 +25,7 @@ public class CubeWheel : MonoBehaviour
     
     const float AutoBrakeAcceleration = 5.25f;
     
-    // Debug Draw
-    [Title("Debug Draw Options")]
-    [Button("@\"Draw Wheel Velocities: \" + _isDrawWheelVelocities", ButtonSizes.Large)]
-    void IsDrawWheelVelocities()
-    {
-        isDrawWheelVelocities = !isDrawWheelVelocities;
-    }
-    [HideInInspector]
+    //[HideInInspector]
     public bool isDrawWheelVelocities, isDrawWheelDisc, isDrawForces;
 
     void Start()
@@ -42,10 +35,12 @@ public class CubeWheel : MonoBehaviour
         _groundControl= GetComponentInParent<CubeGroundControl>();
         _wheelRadius = transform.localScale.z / 2;
     }
-
     
-    void Update()
+    public void RotateWheels(float steerAngle)
     {
+        if(wheelFL || wheelFR)
+            transform.localRotation = Quaternion.Euler(Vector3.up * steerAngle);
+        
         // Update mesh rotations of the wheel
         if (wheelMesh)
         {
@@ -56,11 +51,6 @@ public class CubeWheel : MonoBehaviour
             wheelMesh.transform.Rotate(Vector3.right, _meshRevolutionAngle * 1.3f);
             //transform.Rotate(new Vector3(0, 1, 0), steerAngle - transform.localEulerAngles.y);
         }
-    }
-
-    public void RotateWheels(float steerAngle)
-    {
-        transform.localRotation = Quaternion.Euler(Vector3.up * steerAngle);
     }
 
     private void FixedUpdate()
@@ -96,7 +86,7 @@ public class CubeWheel : MonoBehaviour
         //Applies auto braking if no input, simulates air and ground drag
         if (!(_c.forwardSpeedAbs >= 0.1)) return;
         
-        //TODO Use constants, also make a separate function
+        //TODO Make a separate function
         var dragForce = AutoBrakeAcceleration / 4 * _c.forwardSpeedSign * (1 - Mathf.Abs(GameManager.InputManager.throttleInput));
         _rb.AddForce(-dragForce * transform.forward, ForceMode.Acceleration);
     }
@@ -112,11 +102,24 @@ public class CubeWheel : MonoBehaviour
         _lastWheelVelocity = _wheelVelocity;
     }
 
+    #region DrawDebugGizmos
+
     private void OnDrawGizmos()
     {
-        _wheelRadius = transform.localScale.z / 2;
-        
-        // Draw wheel disc
+        //_wheelRadius = transform.localScale.z / 2;
+
+        // DrawWheelDisc();
+        // DrawWheelContactPoint();
+        //
+        // if (isDrawWheelVelocities)
+        //     DrawWheelVelocities();
+        //
+        // if(isDrawForces)
+        //     DrawForces();
+    }
+
+    private void DrawWheelDisc()
+    {
         if (isDrawWheelDisc)
         {
             Handles.color = Color.black;
@@ -125,47 +128,34 @@ public class CubeWheel : MonoBehaviour
 
             Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, _wheelRadius);
         }
-        
-        if (_rb == null) return;
-        
-        // wheelContactPoint
+    }
+
+    private void DrawWheelContactPoint()
+    {
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position - transform.up * _wheelRadius, 0.02f);
-        
-        if (_c.isCanDrive != true) return;      
-        
-        // Draw observed Vx and Vy wheel velocities
-        if (isDrawWheelVelocities)
-        {
-            DrawRay(_wheelContactPoint, _wheelVelocity * 0.1f, Color.black);
-            DrawRay(_wheelContactPoint, (_wheelForwardVelocity * 0.1f) * transform.forward, Color.blue);
-            DrawRay(_wheelContactPoint, (_wheelLateralVelocity * 0.1f) * transform.right, Color.red);    
-        }
-
-        if(isDrawForces)
-        {
-            // Draw induced lateral friction Fy
-            DrawRay(_lateralForcePosition, 0.3f * -Fy * transform.right, Color.magenta);
-            
-            // Draw observed forces
-            DrawLocalRay(transform.up, _wheelAcceleration.z, transform.forward, Color.gray);
-        }
     }
 
-    #region Unitls
-
-    void DrawRay(Vector3 from, Vector3 direction, Color c )
+    private void DrawWheelVelocities()
     {
-        Gizmos.color = c;
-        Gizmos.DrawRay(from, direction);
-        Gizmos.DrawSphere(from + direction, 0.02f);
+        if (_rb == null) return;
+        if (_c.isCanDrive != true) return;   
+        
+        var offset = 0.05f * transform.up;
+        RoboUtils.DrawRay(_wheelContactPoint + offset, _wheelVelocity * 0.1f, Color.black);
+        RoboUtils.DrawRay(_wheelContactPoint + offset, (_wheelForwardVelocity * 0.1f) * transform.forward, Color.blue);
+        RoboUtils.DrawRay(_wheelContactPoint + offset, (_wheelLateralVelocity * 0.1f) * transform.right, Color.red);
     }
-    
-    void DrawLocalRay(Vector3 from, float length, Vector3 dir, Color c)
+
+    private void DrawForces()
     {
-        Gizmos.color = c;
-        Gizmos.DrawRay(transform.position + from, length * dir);
-        Gizmos.DrawSphere(transform.position + from + length * dir, 0.03f);
+        if (_c.isCanDrive != true) return;   
+        
+        // Draw induced lateral friction Fy
+        RoboUtils.DrawRay(_lateralForcePosition, 0.3f * -Fy * transform.right, Color.magenta);
+
+        // Draw observed forces
+        RoboUtils.DrawLocalRay(transform, transform.up, _wheelAcceleration.z, transform.forward, Color.gray);
     }
     
     #endregion

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -68,14 +69,10 @@ public class CubeController : MonoBehaviour
     
     void SetCarState()
     {
-        int temp = 0;
-        foreach (var c in _sphereColliders)
-        {
-            if (c.isTouchingSurface)
-                temp++;
-        }
+        int temp = _sphereColliders.Count(c => c.isTouchingSurface);
         numWheelsSurface = temp;
-        isAllWheelsSurface = numWheelsSurface >= 3 ? true : false;
+        
+        isAllWheelsSurface = numWheelsSurface >= 3;
 
         // All wheels are touching the ground
         if (isAllWheelsSurface)
@@ -101,7 +98,7 @@ public class CubeController : MonoBehaviour
         if (!isBodySurface && numWheelsSurface == 0)
             carState = CarStates.Air;
 
-        isCanDrive = false || (carState == CubeController.CarStates.AllWheelsSurface || carState == CubeController.CarStates.AllWheelsGround);
+        isCanDrive = carState == CarStates.AllWheelsSurface || carState == CarStates.AllWheelsGround;
     }
 
     void DownForce()
@@ -127,23 +124,5 @@ public class CubeController : MonoBehaviour
         Gizmos.DrawSphere(_rb.transform.TransformPoint(_rb.centerOfMass), 0.03f);
     }
 
-    #endregion
-
-    #region Utils
-
-    public static float Scale(float oldMin, float oldMax, float newMin, float newMax, float oldValue)
-    {
-        float oldRange = (oldMax - oldMin);
-        float newRange = (newMax - newMin);
-        float newValue = (((oldValue - oldMin) * newRange) / oldRange) + newMin;
-
-        return (newValue);
-    }
-    public static void ClearConsole()
-    {
-        var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
-        var clearMethod = logEntries.GetMethod("Clear", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-        clearMethod.Invoke(null, null);
-    }
     #endregion
 }

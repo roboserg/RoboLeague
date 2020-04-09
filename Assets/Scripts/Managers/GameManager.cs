@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
-        Debug.Log("Managers ONLINE!");
-
         InputManager = GetComponent<InputManager>();
         AudioManager = GetComponent<AudioManager>();
         //DontDestroyOnLoad(gameObject);

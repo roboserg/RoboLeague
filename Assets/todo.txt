@@ -2,7 +2,6 @@ Features TODO:
     - Ackermann steering / bicycle model
     - Second jump
     - lateral friction model as in RL (ratio between Vx/Vy)
-    - Sticky forces
     - Stabilizing moment (if 2 wheels touch ground, calculate the ground normal and apply moment so that the dot/cross product is 0)
     - Dodges 
     - Better drift (maybe apply torque or less drag on rear wheels)
@@ -11,7 +10,8 @@ Features TODO:
     - Wheel colliders should probably detect the ground / walls too
 
 Problems:
-    - lateral speed goes behind the wheels
+    - Fix Sticky forces
+    - lateral speed goes behind the wheels (visual bug only)
     - Camera fixes (maybe use Cinemamachine, camera as in Kart game)
     - Aerial CoM (?)
     - Breakdancing (sphere collider touches the ground but not the raycast, enables aircontrol on the ground)

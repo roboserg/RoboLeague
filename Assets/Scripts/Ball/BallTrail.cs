@@ -27,14 +27,14 @@ public class BallTrail : MonoBehaviour
         _speedMagnitude = _rb.velocity.magnitude;
         _speedMagnitudeKmH = _speedMagnitude * 3.6f;
 
-        var currentAlpha = CubeController.Scale(40, 100, 0, 1, _speedMagnitudeKmH);
+        var currentAlpha = RoboUtils.Scale(40, 100, 0, 1, _speedMagnitudeKmH);
         currentAlpha = Mathf.Clamp(currentAlpha, 0, 1);
         _gradient.alphaKeys = new GradientAlphaKey[]{ new GradientAlphaKey(currentAlpha, 0), new GradientAlphaKey(0, 1) }; 
         _trail.colorGradient = _gradient;
 
         var maxTrailWidth = 0.6f;
         var minTrailWidth = 0.3f;
-        var trailWidth = CubeController.Scale(40, 80, minTrailWidth, maxTrailWidth, _speedMagnitudeKmH);
+        var trailWidth = RoboUtils.Scale(40, 80, minTrailWidth, maxTrailWidth, _speedMagnitudeKmH);
         _trail.startWidth = Mathf.Clamp(trailWidth, minTrailWidth, maxTrailWidth);
     }
 }

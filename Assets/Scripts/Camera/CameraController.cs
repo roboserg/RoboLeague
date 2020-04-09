@@ -50,62 +50,62 @@ public class CameraController : MonoBehaviour
             LookAtTarget(stiffnessAngleOff);
         }
     }
-    public void MoveToTarget(float StifnessPosition)
+    void MoveToTarget(float stiffnessPos)
     {
-        Vector3 DesiredPosition = transform.position;
+        var desiredPosition = transform.position;
 
         if (isWatchBall)
         {
-            Vector3 direction = (transform.position - _ball.position).normalized;
-            DesiredPosition = _ball.position + transform.forward * -distanceToBall;
-            if (DesiredPosition.y < -7f)
-                DesiredPosition.y = -7f;
+            var direction = (transform.position - _ball.position).normalized;
+            desiredPosition = _ball.position + transform.forward * -distanceToBall;
+            if (desiredPosition.y < -7f)
+                desiredPosition.y = -7f;
         }
 
         else if (_isBallCam && !isWatchBall)
         {
-            Vector3 offset = new Vector3(0, cameraHeight, cameraDist);
-            DesiredPosition = _car.position + transform.forward * cameraDist + transform.right * offset.x + transform.up * offset.y;
-            if (DesiredPosition.y < _car.position.y - 1)
-                DesiredPosition.y = _car.position.y - 0.9f;
+            var offset = new Vector3(0, cameraHeight, cameraDist);
+            desiredPosition = _car.position + transform.forward * cameraDist + transform.right * offset.x + transform.up * offset.y;
+            if (desiredPosition.y < _car.position.y - 1)
+                desiredPosition.y = _car.position.y - 0.9f;
         }
 
         else if (!isWatchBall)
         {
-            Vector3 offset = new Vector3(0, cameraHeightOff, cameraDistOff);
-            DesiredPosition = _car.position + _car.forward * offset.z + _car.right * offset.x + _car.up * offset.y;
+            var offset = new Vector3(0, cameraHeightOff, cameraDistOff);
+            desiredPosition = _car.position + _car.forward * offset.z + _car.right * offset.x + _car.up * offset.y;
         }
 
-        transform.position = Vector3.Lerp(transform.position, DesiredPosition, StifnessPosition * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, stiffnessPos * Time.deltaTime);
     }
 
-    public void LookAtTarget(float StifnessAngle)
+    void LookAtTarget(float stiffnessAngle)
     {
-        Vector3 AngleOffset = new Vector3(0, cameraAngle, 0);
+        Vector3 angleOffset = new Vector3(0, cameraAngle, 0);
 
         if(isWatchBall)
         {
-            Vector3 DesiredAngle = _ball.position - transform.position + AngleOffset;
+            Vector3 desiredAngle = _ball.position - transform.position + angleOffset;
             //DesiredAngle.y = transform.rotation.y + CameraAngle;
-            Quaternion _rot = Quaternion.LookRotation(DesiredAngle, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _rot, StifnessAngle * Time.deltaTime);
+            Quaternion _rot = Quaternion.LookRotation(desiredAngle, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _rot, stiffnessAngle * Time.deltaTime);
             return;
         }
 
         if (_isBallCam)
         {
-            Vector3 DesiredAngle = _ball.position - transform.position + AngleOffset;
-            DesiredAngle.y = transform.rotation.y + cameraAngle;
+            Vector3 desiredAngle = _ball.position - transform.position + angleOffset;
+            desiredAngle.y = transform.rotation.y + cameraAngle;
             //DesiredAngle.z = 0;
-            Quaternion _rot = Quaternion.LookRotation(DesiredAngle, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _rot, StifnessAngle * Time.deltaTime);
+            Quaternion rot = Quaternion.LookRotation(desiredAngle, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, stiffnessAngle * Time.deltaTime);
         }
         else
         {
-            AngleOffset = new Vector3(0, cameraAngleOff, 0);
-            Vector3 DesiredAngle = _car.position - transform.position + AngleOffset;
-            Quaternion _rot = Quaternion.LookRotation(DesiredAngle, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _rot, StifnessAngle * Time.deltaTime);
+            angleOffset = new Vector3(0, cameraAngleOff, 0);
+            Vector3 desiredAngle = _car.position - transform.position + angleOffset;
+            Quaternion rot = Quaternion.LookRotation(desiredAngle, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, stiffnessAngle * Time.deltaTime);
         }
     }
 

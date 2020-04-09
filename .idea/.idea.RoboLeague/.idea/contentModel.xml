@@ -141,6 +141,7 @@
             <e p="InputMaster.cs" t="Include" />
             <e p="NewInputSystemTest.cs" t="Include" />
           </e>
+          <e p="RoboUtils.cs" t="Include" />
         </e>
         <e p="Shaders" t="Include">
           <e p="CheckerBoardGlobal.shader" t="Include" />
