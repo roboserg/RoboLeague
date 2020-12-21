@@ -24,6 +24,7 @@ Please refer to [Unity ML Agents repository.](https://github.com/Unity-Technolog
 * lateral friction model as in the game (ratio between Vx/Vy)
 
 ### Useful reading (in random order):
+* [Unity ML-Agents Toolkit Documentation](https://github.com/Unity-Technologies/ml-agents/tree/master/docs)
 * [Physics and math of Rocket League](https://samuelpmish.github.io/notes/RocketLeague)
 * [Useful game values](https://github.com/RLBot/RLBot/wiki/Useful-Game-Values)
 * [RLBot framework](https://github.com/RLBot/RLBot)
