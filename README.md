@@ -1,7 +1,7 @@
 # RoboLeague
 A car soccer environment inspired by Rocket League for deep reinforcement learning experiments in an adversarial self-play setting.
 
-### Completed features (identical as in the game):
+### Completed features (identical to Rocket League):
 * Ball physics
 * Car aerial control and physics
 * Acceleration and braking
