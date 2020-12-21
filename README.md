@@ -1,6 +1,9 @@
 # RoboLeague
 A car soccer environment inspired by Rocket League for deep reinforcement learning experiments in an adversarial self-play setting.
 
+### Installation:
+Please refer to [Unity ML Agents repository.](https://github.com/Unity-Technologies/ml-agents) Current version of RoboLeague uses [ML-Agents Release 11](https://github.com/Unity-Technologies/ml-agents/releases/tag/release_11)
+
 ### Completed features (identical to Rocket League):
 * Ball physics
 * Car aerial control and physics
