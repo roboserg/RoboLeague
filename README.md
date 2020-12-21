@@ -12,8 +12,9 @@ A car soccer environment inspired by Rocket League for deep reinforcement learni
 ![](https://github.com/roboserg/RoboLeague/blob/master/Goal.gif)
 ![](https://github.com/roboserg/RoboLeague/blob/master/driving.gif)
 
-### TODO:
+### Planned features:
 * Unity ML agents integration
+* OpenAI gym interface integration. [Unity ML already provides a wrapper](https://github.com/Unity-Technologies/ml-agents/tree/master/gym-unity)
 * Car ball interaction
 * Dodges and second jump
 * Stabilizing moment near the ground
