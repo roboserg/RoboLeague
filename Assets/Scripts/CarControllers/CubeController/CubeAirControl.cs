@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CubeController))]
 public class CubeAirControl : MonoBehaviour
