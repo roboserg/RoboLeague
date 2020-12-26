@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Space Shooter.unity
-    guid: b59d102b589b4c94593a1c37f5319c68
+    path: Assets/ML/SimpleAgent/SimpleMLTest.unity
+    guid: cf6268627c28d7844979cd87f9dbb096
   m_configObjects: {}
