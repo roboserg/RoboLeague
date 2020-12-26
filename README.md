@@ -2,9 +2,10 @@
 A car soccer environment inspired by Rocket League for deep reinforcement learning experiments in an adversarial self-play setting.
 
 ### Installation:
-Please refer to [Unity ML Agents repository.](https://github.com/Unity-Technologies/ml-agents) Current version of RoboLeague uses [ML-Agents Release 11](https://github.com/Unity-Technologies/ml-agents/releases/tag/release_11)
+Please refer to the [Unity ML Agents repository.](https://github.com/Unity-Technologies/ml-agents) Current version of RoboLeague uses [ML-Agents Release 11](https://github.com/Unity-Technologies/ml-agents/releases/tag/release_11)
 
 ### Completed features (identical to Rocket League):
+* Unity ML agents integration
 * Ball physics
 * Car aerial control and physics
 * Acceleration and braking
@@ -16,12 +17,11 @@ Please refer to [Unity ML Agents repository.](https://github.com/Unity-Technolog
 ![](https://github.com/roboserg/RoboLeague/blob/master/driving.gif)
 
 ### Planned features:
-* Unity ML agents integration
 * OpenAI gym interface integration. [Unity ML already provides a wrapper](https://github.com/Unity-Technologies/ml-agents/tree/master/gym-unity)
 * Car ball interaction
 * Dodges and second jump
 * Stabilizing moment near the ground
-* lateral friction model as in the game (ratio between Vx/Vy)
+* Lateral friction model as in the game (ratio between Vx/Vy)
 
 ### Useful reading (in random order):
 * [Unity ML-Agents Toolkit Documentation](https://github.com/Unity-Technologies/ml-agents/tree/master/docs)
