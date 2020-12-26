@@ -3,6 +3,7 @@
 [RequireComponent(typeof(CubeController))]
 public class CubeBoosting : MonoBehaviour
 {
+    public float BoostForceMultiplier = 1f;
     const float BoostForce = 991 / 100;
     
     CubeController _c;
@@ -27,7 +28,7 @@ public class CubeBoosting : MonoBehaviour
     {
         if (GameManager.InputManager.isBoost && _c.forwardSpeed < CubeController.MaxSpeedBoost)
         {
-                _rb.AddForce(BoostForce * transform.forward, ForceMode.Acceleration);
+                _rb.AddForce(BoostForce * BoostForceMultiplier * transform.forward, ForceMode.Acceleration);
         }
     }
 }

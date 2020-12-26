@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     public float throttleInput, steerInput, yawInput, pitchInput, rollInput;
     public bool isBoost, isDrift, isAirRoll;
     public bool isJump, isJumpUp, isJumpDown;
-    void Update()
+    /*void Update()
     {
         throttleInput = GetThrottle();
         steerInput = GetSteerInput();
@@ -20,11 +20,11 @@ public class InputManager : MonoBehaviour
         isJump = Input.GetMouseButton(1) || Input.GetButton("A");
         isJumpUp = Input.GetMouseButtonUp(1) || Input.GetButtonUp("A");
         isJumpDown = Input.GetMouseButtonDown(1) || Input.GetButtonDown("A");
-        
+
         isBoost = Input.GetButton("RB") || Input.GetMouseButton(0);
         isDrift = Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift);
         isAirRoll = Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift);
-    }
+    }*/
 
     private static float GetRollInput()
     {
@@ -80,7 +80,8 @@ public class InputManager : MonoBehaviour
     
     private void OnGUI()
     {
-        GUILayout.HorizontalSlider(Input.GetAxis("Horizontal"), -1, 1, GUILayout.Width(200));
-        GUILayout.HorizontalSlider(steerInput, -1, 1, GUILayout.Width(200));
+        GUILayout.HorizontalSlider(pitchInput, -1, 1, GUILayout.Width(200));
+        GUILayout.HorizontalSlider(yawInput, -1, 1, GUILayout.Width(200));
+        GUILayout.HorizontalSlider(rollInput, -1, 1, GUILayout.Width(200));
     }
 }

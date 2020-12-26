@@ -238,10 +238,10 @@ public class ECCCar : MonoBehaviour
 
     static Vector3 TransformByPixel(Vector3 position, Vector3 translateBy)
     {
+#if UNITY_EDITOR
         Camera cam = UnityEditor.SceneView.currentDrawingSceneView.camera;
-        if (cam)
-            return cam.ScreenToWorldPoint(cam.WorldToScreenPoint(position) + translateBy);
-        else
-            return position;
+        return cam ? cam.ScreenToWorldPoint(cam.WorldToScreenPoint(position) + translateBy) : position;
+#endif
+        return Vector3.zero;
     }
 }

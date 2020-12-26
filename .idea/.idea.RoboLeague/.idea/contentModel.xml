@@ -69,6 +69,22 @@
             <e p="WheelSkid.cs" t="Include" />
           </e>
         </e>
+        <e p="ML-Agents" t="Include">
+          <e p="CubeAgent.cs" t="Include" />
+          <e p="Experiments" t="Include">
+            <e p="AirDribble" t="Include">
+              <e p="AirDribbleAgent.cs" t="Include" />
+            </e>
+            <e p="CalmHover" t="Include">
+              <e p="CalmHoverAgent.cs" t="Include" />
+            </e>
+            <e p="MaxSpeedPlusConstantRoll" t="Include">
+              <e p="MaxSpeedAgent.cs" t="Include" />
+            </e>
+          </e>
+          <e p="HomingMissile.cs" t="Include" />
+          <e p="SimpleAgent.cs" t="Include" />
+        </e>
         <e p="notes.txt" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Sirenix" t="Include">
@@ -93,6 +109,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Ball" t="Include">
+            <e p="AutoThrowBall.cs" t="Include" />
             <e p="Ball.cs" t="Include" />
             <e p="BallPhysics.cs" t="Include" />
             <e p="BallTrail.cs" t="Include" />
@@ -119,17 +136,24 @@
               <e p="CubeWheel.cs" t="Include" />
               <e p="test.cs" t="Include" />
             </e>
-            <e p="MyRayCast" t="Include">
-              <e p="RayController.cs" t="Include" />
-              <e p="RayWheel.cs" t="Include" />
-            </e>
             <e p="Other" t="Include">
               <e p="CarController.cs" t="Include" />
               <e p="CarSelfRighting.cs" t="Include" />
               <e p="CarUserControl.cs" t="Include" />
               <e p="HoverCarControl.cs" t="Include" />
+              <e p="MyRayCast" t="Include">
+                <e p="RayController.cs" t="Include" />
+                <e p="RayWheel.cs" t="Include" />
+              </e>
               <e p="RayCastCarController.cs" t="Include" />
               <e p="SphereController.cs" t="Include" />
+            </e>
+            <e p="SimpleController" t="Include">
+              <e p="SimpleAirControl.cs" t="Include" />
+              <e p="SimpleCarAgent.cs" t="Include" />
+              <e p="SimpleController.cs" t="Include" />
+              <e p="SimpleParticleSystem.cs" t="Include" />
+              <e p="UIManager.cs" t="Include" />
             </e>
           </e>
           <e p="Managers" t="Include">
