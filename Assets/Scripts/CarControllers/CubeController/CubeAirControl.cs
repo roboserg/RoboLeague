@@ -11,14 +11,12 @@ public class CubeAirControl : MonoBehaviour
     CubeController _controller;
     
     #region Torque Coefficients for rotation and drag
-    
     const float Tr = 36.07956616966136f; // torque coefficient for roll
     const float Tp = 12.14599781908070f; // torque coefficient for pitch
     const float Ty = 8.91962804287785f; // torque coefficient for yaw
     const float Dr = -4.47166302201591f; // drag coefficient for roll
     const float Dp = -2.798194258050845f; // drag coefficient for pitch
     const float Dy = -1.886491900437232f; // drag coefficient for yaw
-    
     #endregion
 
     void Start()

@@ -119,6 +119,7 @@ public class CubeWheel : MonoBehaviour
 
     private void DrawWheelDisc()
     {
+#if UNITY_EDITOR
         if (isDrawWheelDisc)
         {
             Handles.color = Color.black;
@@ -127,6 +128,7 @@ public class CubeWheel : MonoBehaviour
 
             Handles.DrawWireArc(transform.position, transform.right, transform.up, 360, _wheelRadius);
         }
+#endif
     }
 
     private void DrawWheelContactPoint()

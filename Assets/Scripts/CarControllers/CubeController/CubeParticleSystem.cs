@@ -25,7 +25,7 @@ public class CubeParticleSystem : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("RB") || Input.GetMouseButton(0))
+        if (GameManager.InputManager.isBoost)
         {
             if (_isBoostAnimationPlaying == false)
             {
@@ -33,9 +33,8 @@ public class CubeParticleSystem : MonoBehaviour
                 firePs.SetActive(true);
                 _isBoostAnimationPlaying = true;
             }
-
         }
-        else if (!(Input.GetButton("RB") || Input.GetMouseButton(0)))
+        else if (!GameManager.InputManager.isBoost)
         {
             boostPs.Stop();
             firePs.SetActive(false);

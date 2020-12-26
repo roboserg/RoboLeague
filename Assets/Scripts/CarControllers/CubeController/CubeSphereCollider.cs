@@ -59,9 +59,10 @@ public class CubeSphereCollider : MonoBehaviour
     public bool isDrawContactLines = false;
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         if(isDrawContactLines)
             DrawContactLines();
-        
+#endif
         // Sticky forces
         //Debug.DrawRay(_contactPoint, _contactNormal);
         //Gizmos.DrawSphere(_rayContactPoint, 0.02f);
@@ -72,13 +73,17 @@ public class CubeSphereCollider : MonoBehaviour
         _rayLen = transform.localScale.x / 2 + _rayOffset;
         var rayEndPoint = transform.position - (transform.up * _rayLen);
         Gizmos.color = Color.red;
+#if UNITY_EDITOR
         Handles.color = Color.red;
+#endif
 
         Vector3 sphereContactPoint;
         if (isTouchingSurface)
         {
             Gizmos.color = Color.green;
+#if UNITY_EDITOR
             Handles.color = Color.green;
+#endif
             sphereContactPoint = _rayContactPoint;
         }
         else sphereContactPoint = rayEndPoint;

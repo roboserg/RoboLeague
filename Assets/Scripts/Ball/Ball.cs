@@ -7,6 +7,8 @@ public class Ball : MonoBehaviour
     [SerializeField] [Range(10,80)] float randomSpeed = 40;
     [SerializeField] float initialForce = 400;
     [SerializeField] float hitMultiplier = 50;
+
+    private bool isTouchedGround = false;
     
     Rigidbody _rb;
     Transform _transform;
@@ -15,6 +17,7 @@ public class Ball : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _transform = this.transform;
+        isTouchedGround = false;
     }
     
     void Update()
@@ -65,6 +68,10 @@ public class Ball : MonoBehaviour
             var dir = transform.position - col.transform.position;
             _rb.AddForce(dir.normalized * force);
         }
+
+
+        if (col.gameObject.CompareTag("Ground"))
+            isTouchedGround = true;
 
         //if (col.gameObject.tag == "Ground")
         //    if (rb.velocity.y > 3)
