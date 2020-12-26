@@ -43,16 +43,17 @@ public class SimpleCarAgent : Agent
         _airControl.inputYaw = inputYaw;
         _airControl.inputPitch = inputPitch;
         _airControl.inputRoll = inputRoll;
+        _airControl.inputRoll = 1;
         _airControl.inputBoost = inputBoost;
         
         if(Mathf.Abs(transform.localPosition.y) > 40 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
             EndEpisode();
         
-        AddReward(inputRoll/300); // 0.01
+        //AddReward(inputRoll/300); // 0.01
         //AddReward(inputBoost ? 0.01f : 0);
         //Debug.Log(actionBuffers.ContinuousActions[2]);
         //Debug.Log(inputRoll);
-        //AddReward(0.01f);
+        AddReward(0.01f);
         AddReward(_controller.velMagn / 1000);
     }
     
