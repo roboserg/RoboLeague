@@ -25672,7 +25672,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 7c3766aaf40b2c14f9a2d10a6bb951e3, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: a5f0693e531377543a03ec7cf4e91158, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Basic
