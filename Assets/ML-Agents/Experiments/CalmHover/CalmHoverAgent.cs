@@ -6,7 +6,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-public class SimpleCarAgent : Agent
+public class CalmHoverAgent : Agent
 {
     public bool isAlwaysRoll = false;
     Rigidbody _rb;
@@ -39,7 +39,9 @@ public class SimpleCarAgent : Agent
     {
         float inputPitch = actionBuffers.ContinuousActions[0];
         float inputYaw = actionBuffers.ContinuousActions[1];
-        float inputRoll = actionBuffers.ContinuousActions[2] > 0 ? 1: -1;
+        float inputRoll = actionBuffers.ContinuousActions[2];
+        inputRoll = inputRoll > 0.33f ? 1 : inputRoll;
+        inputRoll = inputRoll < -0.33f ? -1 : inputRoll;
         bool inputBoost = actionBuffers.ContinuousActions[3] > 0;
 
         _airControl.inputYaw = inputYaw;
@@ -51,12 +53,12 @@ public class SimpleCarAgent : Agent
         if(Mathf.Abs(transform.localPosition.y) > 40 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
             EndEpisode();
         
-        //AddReward(inputRoll/300); // 0.01
+        AddReward(inputRoll/300); // 0.01
         //AddReward(inputBoost ? 0.01f : 0);
         //Debug.Log(actionBuffers.ContinuousActions[2]);
         //Debug.Log(inputRoll);
         AddReward(0.01f);
-        AddReward(_controller.velMagn / 1000);
+        AddReward(-_controller.velMagn / 5000);
     }
     
     public override void Heuristic(in ActionBuffers actionsOut)

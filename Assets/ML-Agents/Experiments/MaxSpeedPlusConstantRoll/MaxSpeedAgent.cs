@@ -6,7 +6,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-public class SimpleCarAgent : Agent
+public class MaxSpeedAgent : Agent
 {
     public bool isAlwaysRoll = false;
     Rigidbody _rb;

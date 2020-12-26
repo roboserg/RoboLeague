@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SimpleAirControl : MonoBehaviour
 {
-    public float inputRoll = 0, inputPitch = 0, inputYaw = 0; 
+    [HideInInspector]
+    public float inputRoll = 0, inputPitch = 0, inputYaw = 0;
+    [HideInInspector]
     public bool inputBoost = false;
     public float boostMultiplier = 1;
     Rigidbody _rb;

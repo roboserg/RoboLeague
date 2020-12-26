@@ -3,180 +3,6 @@
   <component name="ContentModelStore">
     <e p="C:\Users\Roboserg\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Roboserg\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_RoboLeague.860720467.00" t="ExcludeRecursive" />
-    <e p="F:\ml-agents-release_11\com.unity.ml-agents\Editor" t="Include">
-      <e p="AgentEditor.cs" t="Include" />
-      <e p="BehaviorParametersEditor.cs" t="Include" />
-      <e p="BrainParametersDrawer.cs" t="Include" />
-      <e p="CameraSensorComponentEditor.cs" t="Include" />
-      <e p="DemonstrationDrawer.cs" t="Include" />
-      <e p="DemonstrationImporter.cs" t="Include" />
-      <e p="EditorUtilities.cs" t="Include" />
-      <e p="RayPerceptionSensorComponentBaseEditor.cs" t="Include" />
-      <e p="RenderTextureSensorComponentEditor.cs" t="Include" />
-    </e>
-    <e p="F:\ml-agents-release_11\com.unity.ml-agents\Runtime" t="Include">
-      <e p="Academy.cs" t="Include" />
-      <e p="Actuators" t="Include">
-        <e p="ActionSegment.cs" t="Include" />
-        <e p="ActionSpec.cs" t="Include" />
-        <e p="ActuatorComponent.cs" t="Include" />
-        <e p="ActuatorDiscreteActionMask.cs" t="Include" />
-        <e p="ActuatorManager.cs" t="Include" />
-        <e p="IActionReceiver.cs" t="Include" />
-        <e p="IActuator.cs" t="Include" />
-        <e p="IDiscreteActionMask.cs" t="Include" />
-        <e p="VectorActuator.cs" t="Include" />
-      </e>
-      <e p="Agent.cs" t="Include" />
-      <e p="Agent.deprecated.cs" t="Include" />
-      <e p="Analytics" t="Include">
-        <e p="Events.cs" t="Include" />
-        <e p="InferenceAnalytics.cs" t="Include" />
-      </e>
-      <e p="AssemblyInfo.cs" t="Include" />
-      <e p="Communicator" t="Include">
-        <e p="GrpcExtensions.cs" t="Include" />
-        <e p="ICommunicator.cs" t="Include" />
-        <e p="RpcCommunicator.cs" t="Include" />
-        <e p="UnityRLCapabilities.cs" t="Include" />
-      </e>
-      <e p="Constants.cs" t="Include" />
-      <e p="DecisionRequester.cs" t="Include" />
-      <e p="Demonstrations" t="Include">
-        <e p="DemonstrationMetaData.cs" t="Include" />
-        <e p="DemonstrationRecorder.cs" t="Include" />
-        <e p="DemonstrationSummary.cs" t="Include" />
-        <e p="DemonstrationWriter.cs" t="Include" />
-      </e>
-      <e p="DiscreteActionMasker.cs" t="Include" />
-      <e p="EnvironmentParameters.cs" t="Include" />
-      <e p="EpisodeIdCounter.cs" t="Include" />
-      <e p="Grpc" t="Include">
-        <e p="AssemblyInfo.cs" t="Include" />
-        <e p="CommunicatorObjects" t="Include">
-          <e p="AgentAction.cs" t="Include" />
-          <e p="AgentInfo.cs" t="Include" />
-          <e p="AgentInfoActionPair.cs" t="Include" />
-          <e p="BrainParameters.cs" t="Include" />
-          <e p="Capabilities.cs" t="Include" />
-          <e p="Command.cs" t="Include" />
-          <e p="CustomResetParameters.cs" t="Include" />
-          <e p="DemonstrationMeta.cs" t="Include" />
-          <e p="EngineConfiguration.cs" t="Include" />
-          <e p="Header.cs" t="Include" />
-          <e p="Observation.cs" t="Include" />
-          <e p="SpaceType.cs" t="Include" />
-          <e p="UnityInput.cs" t="Include" />
-          <e p="UnityMessage.cs" t="Include" />
-          <e p="UnityOutput.cs" t="Include" />
-          <e p="UnityRlInitializationInput.cs" t="Include" />
-          <e p="UnityRlInitializationOutput.cs" t="Include" />
-          <e p="UnityRlInput.cs" t="Include" />
-          <e p="UnityRlOutput.cs" t="Include" />
-          <e p="UnityToExternal.cs" t="Include" />
-          <e p="UnityToExternalGrpc.cs" t="Include" />
-        </e>
-      </e>
-      <e p="Inference" t="Include">
-        <e p="ApplierImpl.cs" t="Include" />
-        <e p="BarracudaModelExtensions.cs" t="Include" />
-        <e p="BarracudaModelParamLoader.cs" t="Include" />
-        <e p="GeneratorImpl.cs" t="Include" />
-        <e p="ModelRunner.cs" t="Include" />
-        <e p="TensorApplier.cs" t="Include" />
-        <e p="TensorGenerator.cs" t="Include" />
-        <e p="TensorNames.cs" t="Include" />
-        <e p="TensorProxy.cs" t="Include" />
-        <e p="Utils" t="Include">
-          <e p="Multinomial.cs" t="Include" />
-          <e p="RandomNormal.cs" t="Include" />
-        </e>
-      </e>
-      <e p="Policies" t="Include">
-        <e p="BarracudaPolicy.cs" t="Include" />
-        <e p="BehaviorParameters.cs" t="Include" />
-        <e p="BrainParameters.cs" t="Include" />
-        <e p="HeuristicPolicy.cs" t="Include" />
-        <e p="IPolicy.cs" t="Include" />
-        <e p="RemotePolicy.cs" t="Include" />
-      </e>
-      <e p="RecursionChecker.cs" t="Include" />
-      <e p="Sampler.cs" t="Include" />
-      <e p="SensorHelper.cs" t="Include" />
-      <e p="Sensors" t="Include">
-        <e p="CameraSensor.cs" t="Include" />
-        <e p="CameraSensorComponent.cs" t="Include" />
-        <e p="ISensor.cs" t="Include" />
-        <e p="ISparseChannelSensor.cs" t="Include" />
-        <e p="ObservationWriter.cs" t="Include" />
-        <e p="RayPerceptionSensor.cs" t="Include" />
-        <e p="RayPerceptionSensorComponent2D.cs" t="Include" />
-        <e p="RayPerceptionSensorComponent3D.cs" t="Include" />
-        <e p="RayPerceptionSensorComponentBase.cs" t="Include" />
-        <e p="Reflection" t="Include">
-          <e p="BoolReflectionSensor.cs" t="Include" />
-          <e p="EnumReflectionSensor.cs" t="Include" />
-          <e p="FloatReflectionSensor.cs" t="Include" />
-          <e p="IntReflectionSensor.cs" t="Include" />
-          <e p="ObservableAttribute.cs" t="Include" />
-          <e p="QuaternionReflectionSensor.cs" t="Include" />
-          <e p="ReflectionSensorBase.cs" t="Include" />
-          <e p="Vector2ReflectionSensor.cs" t="Include" />
-          <e p="Vector3ReflectionSensor.cs" t="Include" />
-          <e p="Vector4ReflectionSensor.cs" t="Include" />
-        </e>
-        <e p="RenderTextureSensor.cs" t="Include" />
-        <e p="RenderTextureSensorComponent.cs" t="Include" />
-        <e p="SensorComponent.cs" t="Include" />
-        <e p="SensorShapeValidator.cs" t="Include" />
-        <e p="StackingSensor.cs" t="Include" />
-        <e p="VectorSensor.cs" t="Include" />
-      </e>
-      <e p="SideChannels" t="Include">
-        <e p="EngineConfigurationChannel.cs" t="Include" />
-        <e p="EnvironmentParametersChannel.cs" t="Include" />
-        <e p="FloatPropertiesChannel.cs" t="Include" />
-        <e p="IncomingMessage.cs" t="Include" />
-        <e p="OutgoingMessage.cs" t="Include" />
-        <e p="RawBytesChannel.cs" t="Include" />
-        <e p="SideChannel.cs" t="Include" />
-        <e p="SideChannelManager.cs" t="Include" />
-        <e p="StatsSideChannel.cs" t="Include" />
-      </e>
-      <e p="StatsRecorder.cs" t="Include" />
-      <e p="Timer.cs" t="Include" />
-      <e p="UnityAgentsException.cs" t="Include" />
-      <e p="Utilities.cs" t="Include" />
-    </e>
-    <e p="F:\ml-agents-release_11\com.unity.ml-agents.extensions\Editor" t="Include">
-      <e p="EditorExample.cs" t="Include" />
-      <e p="RigidBodySensorComponentEditor.cs" t="Include" />
-    </e>
-    <e p="F:\ml-agents-release_11\com.unity.ml-agents.extensions\Runtime" t="Include">
-      <e p="AssemblyInfo.cs" t="Include" />
-      <e p="Match3" t="Include">
-        <e p="AbstractBoard.cs" t="Include" />
-        <e p="Match3Actuator.cs" t="Include" />
-        <e p="Match3ActuatorComponent.cs" t="Include" />
-        <e p="Match3Sensor.cs" t="Include" />
-        <e p="Match3SensorComponent.cs" t="Include" />
-        <e p="Move.cs" t="Include" />
-      </e>
-      <e p="Sensors" t="Include">
-        <e p="ArticulationBodyJointExtractor.cs" t="Include" />
-        <e p="ArticulationBodyPoseExtractor.cs" t="Include" />
-        <e p="ArticulationBodySensorComponent.cs" t="Include" />
-        <e p="CountingGridSensor.cs" t="Include" />
-        <e p="GridSensor.cs" t="Include" />
-        <e p="IJointExtractor.cs" t="Include" />
-        <e p="PhysicsBodySensor.cs" t="Include" />
-        <e p="PhysicsSensorSettings.cs" t="Include" />
-        <e p="PoseExtractor.cs" t="Include" />
-        <e p="RigidBodyJointExtractor.cs" t="Include" />
-        <e p="RigidBodyPoseExtractor.cs" t="Include" />
-        <e p="RigidBodySensorComponent.cs" t="Include" />
-      </e>
-    </e>
     <e p="I:\Unity ML Agents\RoboLeague" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -243,17 +69,21 @@
             <e p="WheelSkid.cs" t="Include" />
           </e>
         </e>
-        <e p="ML" t="Include">
+        <e p="ML-Agents" t="Include">
           <e p="CubeAgent.cs" t="Include" />
-          <e p="SimpleAgent" t="Include">
-            <e p="HomingMissile.cs" t="Include" />
-            <e p="SimpleAgent.cs" t="Include" />
-            <e p="SimpleAirControl.cs" t="Include" />
-            <e p="SimpleCarAgent.cs" t="Include" />
-            <e p="SimpleController.cs" t="Include" />
-            <e p="SimpleParticleSystem.cs" t="Include" />
-            <e p="UIManager.cs" t="Include" />
+          <e p="Experiments" t="Include">
+            <e p="AirDribble" t="Include">
+              <e p="AirDribbleAgent.cs" t="Include" />
+            </e>
+            <e p="CalmHover" t="Include">
+              <e p="CalmHoverAgent.cs" t="Include" />
+            </e>
+            <e p="MaxSpeedPlusConstantRoll" t="Include">
+              <e p="MaxSpeedAgent.cs" t="Include" />
+            </e>
           </e>
+          <e p="HomingMissile.cs" t="Include" />
+          <e p="SimpleAgent.cs" t="Include" />
         </e>
         <e p="notes.txt" t="Include" />
         <e p="Plugins" t="Include">
@@ -306,17 +136,24 @@
               <e p="CubeWheel.cs" t="Include" />
               <e p="test.cs" t="Include" />
             </e>
-            <e p="MyRayCast" t="Include">
-              <e p="RayController.cs" t="Include" />
-              <e p="RayWheel.cs" t="Include" />
-            </e>
             <e p="Other" t="Include">
               <e p="CarController.cs" t="Include" />
               <e p="CarSelfRighting.cs" t="Include" />
               <e p="CarUserControl.cs" t="Include" />
               <e p="HoverCarControl.cs" t="Include" />
+              <e p="MyRayCast" t="Include">
+                <e p="RayController.cs" t="Include" />
+                <e p="RayWheel.cs" t="Include" />
+              </e>
               <e p="RayCastCarController.cs" t="Include" />
               <e p="SphereController.cs" t="Include" />
+            </e>
+            <e p="SimpleController" t="Include">
+              <e p="SimpleAirControl.cs" t="Include" />
+              <e p="SimpleCarAgent.cs" t="Include" />
+              <e p="SimpleController.cs" t="Include" />
+              <e p="SimpleParticleSystem.cs" t="Include" />
+              <e p="UIManager.cs" t="Include" />
             </e>
           </e>
           <e p="Managers" t="Include">
@@ -347,11 +184,6 @@
       <e p="Sirenix.OdinInspector.CompatibilityLayer.csproj" t="IncludeRecursive" />
       <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj" t="IncludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
-      <e p="Unity.ML-Agents.CommunicatorObjects.csproj" t="IncludeRecursive" />
-      <e p="Unity.ML-Agents.csproj" t="IncludeRecursive" />
-      <e p="Unity.ML-Agents.Editor.csproj" t="IncludeRecursive" />
-      <e p="Unity.ML-Agents.Extensions.csproj" t="IncludeRecursive" />
-      <e p="Unity.ML-Agents.Extensions.Editor.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>

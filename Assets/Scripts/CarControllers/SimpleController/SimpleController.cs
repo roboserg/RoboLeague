@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SimpleController : MonoBehaviour
 {
+    [HideInInspector]
     public float velForward, velMagn;
     private Rigidbody _rb;
     void Start()

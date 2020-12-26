@@ -6,15 +6,17 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-public class SimpleCarAgent : Agent
+public class AirDribbleAgent : Agent
 {
     public bool isAlwaysRoll = false;
-    Rigidbody _rb;
+    public Transform ballTransform;
+    Rigidbody _rb, _rbBall;
     private SimpleAirControl _airControl;
     private SimpleController _controller;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _rbBall = ballTransform.GetComponent<Rigidbody>();
         _airControl = GetComponentInChildren<SimpleAirControl>();
         _controller = GetComponentInChildren<SimpleController>();
     }
@@ -25,6 +27,10 @@ public class SimpleCarAgent : Agent
         transform.rotation = Quaternion.Euler(-90,0,0);
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
+        
+        ballTransform.localPosition = new Vector3(0, 9, 0);
+        _rbBall.velocity = Vector3.zero;
+        _rbBall.angularVelocity = Vector3.zero;
     }
     
     public override void CollectObservations(VectorSensor sensor)
@@ -33,13 +39,18 @@ public class SimpleCarAgent : Agent
         sensor.AddObservation(transform.rotation);
         sensor.AddObservation(_rb.velocity);
         sensor.AddObservation(_rb.angularVelocity);
+        //Ball
+        sensor.AddObservation(ballTransform.localPosition);
+        sensor.AddObservation(_rbBall.velocity);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         float inputPitch = actionBuffers.ContinuousActions[0];
         float inputYaw = actionBuffers.ContinuousActions[1];
-        float inputRoll = actionBuffers.ContinuousActions[2] > 0 ? 1: -1;
+        float inputRoll = actionBuffers.ContinuousActions[2];
+        inputRoll = inputRoll > 0.33f ? 1 : inputRoll;
+        inputRoll = inputRoll < -0.33f ? -1 : inputRoll;
         bool inputBoost = actionBuffers.ContinuousActions[3] > 0;
 
         _airControl.inputYaw = inputYaw;
@@ -48,15 +59,21 @@ public class SimpleCarAgent : Agent
         if(isAlwaysRoll) _airControl.inputRoll = 1;
         _airControl.inputBoost = inputBoost;
         
-        if(Mathf.Abs(transform.localPosition.y) > 40 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
+        //if(Mathf.Abs(transform.localPosition.y) > 50 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
+        //    EndEpisode();
+        
+        //if(Mathf.Abs(ballTransform.localPosition.y) > 50 || Mathf.Abs(ballTransform.localPosition.x) > 60 || Mathf.Abs(ballTransform.localPosition.z) > 60)
+        //    EndEpisode();
+        
+        if(ballTransform.localPosition.y < 1.5f)
             EndEpisode();
         
+        AddReward(0.01f);
         //AddReward(inputRoll/300); // 0.01
         //AddReward(inputBoost ? 0.01f : 0);
         //Debug.Log(actionBuffers.ContinuousActions[2]);
         //Debug.Log(inputRoll);
-        AddReward(0.01f);
-        AddReward(_controller.velMagn / 1000);
+        //AddReward(-_controller.velMagn / 1000);
     }
     
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -76,7 +93,7 @@ public class SimpleCarAgent : Agent
     
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.CompareTag("Ground"))
-            EndEpisode();
+        //if(other.gameObject.CompareTag("Ground"))
+        //    EndEpisode();
     }
 }
