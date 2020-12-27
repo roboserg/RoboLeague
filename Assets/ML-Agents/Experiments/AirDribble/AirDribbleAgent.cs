@@ -23,12 +23,15 @@ public class AirDribbleAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(0, 7, 0);
-        transform.rotation = Quaternion.Euler(-90,0,0);
+        //transform.localPosition = new Vector3(0, 7, 0);
+        transform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), 13, Random.Range(-0.5f, 0.5f));
+        //transform.rotation = Quaternion.Euler(-90,0,0);
+        transform.rotation = Quaternion.Euler(Random.Range(-110, -75),Random.Range(-30, 30),Random.Range(-30, 30));
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
         
-        ballTransform.localPosition = new Vector3(0, 9, 0);
+        //ballTransform.localPosition = new Vector3(0, 11, 0);
+        ballTransform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), 20, Random.Range(-0.5f, 0.5f));
         _rbBall.velocity = Vector3.zero;
         _rbBall.angularVelocity = Vector3.zero;
     }
@@ -59,13 +62,15 @@ public class AirDribbleAgent : Agent
         if(isAlwaysRoll) _airControl.inputRoll = 1;
         _airControl.inputBoost = inputBoost;
         
-        //if(Mathf.Abs(transform.localPosition.y) > 50 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
-        //    EndEpisode();
+        if(Mathf.Abs(transform.localPosition.y) > 25 || Mathf.Abs(transform.localPosition.x) > 60 || Mathf.Abs(transform.localPosition.z) > 60)
+            EndEpisode();
         
         //if(Mathf.Abs(ballTransform.localPosition.y) > 50 || Mathf.Abs(ballTransform.localPosition.x) > 60 || Mathf.Abs(ballTransform.localPosition.z) > 60)
         //    EndEpisode();
+        if(ballTransform.localPosition.y < transform.localPosition.y || ballTransform.localPosition.y < 1.6f)
+            EndEpisode();
         
-        if(ballTransform.localPosition.y < 1.5f)
+        if(Vector3.Distance(transform.localPosition, ballTransform.localPosition) > 15)
             EndEpisode();
         
         AddReward(0.01f);
@@ -90,10 +95,14 @@ public class AirDribbleAgent : Agent
         else if (Input.GetKey(KeyCode.Q) || Input.GetButton("Y"))
             continuousActionsOut[2] = 1;
     }
-    
+
+    private int x = 0;
     private void OnCollisionEnter(Collision other)
     {
-        //if(other.gameObject.CompareTag("Ground"))
-        //    EndEpisode();
+        if(other.gameObject.CompareTag("Ball"))
+            AddReward(0.02f);
+        
+        if(other.gameObject.CompareTag("Ground"))
+            EndEpisode();
     }
 }

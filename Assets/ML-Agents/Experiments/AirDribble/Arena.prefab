@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 6411571707907149435}
   - component: {fileID: 6411571707907149432}
   m_Layer: 0
-  m_Name: CalmHoverAgent
+  m_Name: AirDribbleAgent
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -905,7 +905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6411571707907149433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 12.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6811778810269476189}
@@ -950,7 +950,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 6b81bc0783072f242a3258bee15b5163, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: dcbebd5a39da1424e89be49b1e75413b, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: Basic
@@ -973,7 +973,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 10000
   isAlwaysRoll: 0
   ballTransform: {fileID: 2965267290187199696}
 --- !u!114 &6411571707907149432
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 10
+  DecisionPeriod: 15
   TakeActionsBetweenDecisions: 1
 --- !u!1 &6811778808915974217
 GameObject:
@@ -26683,6 +26683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532842153811578195, guid: 2946bfcea95aa1d40872741310581650,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 2532842153811578196, guid: 2946bfcea95aa1d40872741310581650,
         type: 3}
