@@ -20,8 +20,10 @@ Please refer to the [Unity ML Agents repository.](https://github.com/Unity-Techn
 * Sticky forces
 
 ### Videos
-![](https://github.com/roboserg/RoboLeague/blob/master/Goal.gif)
+![](https://github.com/roboserg/RoboLeague/blob/master/airdribble.gif)
+![](https://github.com/roboserg/RoboLeague/blob/master/Goal.gif) 
 ![](https://github.com/roboserg/RoboLeague/blob/master/driving.gif)
+![](https://github.com/roboserg/RoboLeague/blob/master/obstacle.gif)
 
 ### Planned features
 * OpenAI gym interface integration. [Unity ML already provides a wrapper](https://github.com/Unity-Technologies/ml-agents/tree/master/gym-unity)
