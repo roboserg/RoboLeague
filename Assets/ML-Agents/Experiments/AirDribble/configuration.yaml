@@ -1,0 +1,61 @@
+# Goal:             Agent should learn to keep the ball in the air
+# Rewards:          For touching the ball and staying alive
+# End of episode:   Ball falling below the agent. Agent touching the ground or leaving the area.
+# Additionally:     Boost multiplier 1x, Agent decision period 15 (to make it harder, but also trains faster)
+default_settings: null
+behaviors:
+  Basic:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 4096
+      buffer_size: 20480
+      learning_rate: 0.001
+      beta: 0.02
+      epsilon: 0.25
+      lambd: 0.95
+      num_epoch: 6
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: true
+      hidden_units: 512
+      num_layers: 3
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    init_path: null
+    keep_checkpoints: 4
+    checkpoint_interval: 250000
+    max_steps: 50000000
+    time_horizon: 5000
+    summary_freq: 5000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: pytorch
+env_settings:
+  env_path: env/Simple/RoboLeague.exe
+  env_args: null
+  base_port: 5005
+  num_envs: 4
+  seed: -1
+engine_settings:
+  width: 500
+  height: 500
+  quality_level: 5
+  time_scale: 80.0
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: true
+environment_parameters: null
+checkpoint_settings:
+  run_id: airdribble-7
+  initialize_from: null
+  load_model: false
+  resume: false
+  force: false
+  train_model: false
+  inference: false
+debug: false
